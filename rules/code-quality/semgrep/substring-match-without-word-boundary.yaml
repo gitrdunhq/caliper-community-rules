@@ -1,0 +1,21 @@
+rules:
+  - id: substring-match-without-word-boundary
+    patterns:
+      - pattern: |
+          if "..." in $VAR: ...
+      - metavariable-regex:
+          metavariable: $...LITERAL
+          regex: ^.{1,4}$
+    message: >
+      Short string literal used in substring match. The expression
+      `if "x" in y` matches anywhere in the string, which causes false
+      positives. For short strings (1-4 chars), use equality checks,
+      startswith/endswith, or regex word boundaries instead.
+    languages: [python]
+    severity: WARNING
+    metadata:
+      category: code-quality
+      subcategory: correctness
+      eedom-plugin: semgrep
+      references:
+        - https://github.com/sam-fakhreddine/eedom-community-rules

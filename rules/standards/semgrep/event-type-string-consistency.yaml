@@ -1,0 +1,20 @@
+rules:
+  - id: event-type-string-consistency
+    patterns:
+      - pattern: |
+          event_type = "..."
+      - pattern-not: |
+          event_type = $ENUM.$ATTR
+    message: >
+      Hardcoded event_type string detected. Use an enum or constant instead
+      of a raw string literal to ensure consistency across the codebase.
+      Typos in event type strings cause silent routing failures that are
+      extremely difficult to debug.
+    languages: [python]
+    severity: WARNING
+    metadata:
+      category: standards
+      subcategory: naming-consistency
+      eedom-plugin: semgrep
+      references:
+        - https://github.com/sam-fakhreddine/eedom-community-rules

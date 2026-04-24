@@ -1,0 +1,49 @@
+rules:
+  - id: missing-oserror-on-file-open
+    patterns:
+      - pattern: |
+          open($FILE, ...)
+      - pattern-not-inside: |
+          try:
+              ...
+              open($FILE, ...)
+              ...
+          except OSError:
+              ...
+      - pattern-not-inside: |
+          try:
+              ...
+              open($FILE, ...)
+              ...
+          except (OSError, ...):
+              ...
+      - pattern-not-inside: |
+          try:
+              ...
+              open($FILE, ...)
+              ...
+          except FileNotFoundError:
+              ...
+      - pattern-not-inside: |
+          try:
+              ...
+              open($FILE, ...)
+              ...
+          except (FileNotFoundError, ...):
+              ...
+      - pattern-not-inside: |
+          with open($FILE, ...) as $F:
+              ...
+    message: >
+      File open() call without OSError/FileNotFoundError handling. File
+      operations can fail for many reasons (permissions, missing file,
+      disk full). Always wrap file open in a try/except that catches
+      OSError or use a context manager with error handling.
+    languages: [python]
+    severity: WARNING
+    metadata:
+      category: security
+      subcategory: error-handling
+      eedom-plugin: semgrep
+      references:
+        - https://github.com/sam-fakhreddine/eedom-community-rules
