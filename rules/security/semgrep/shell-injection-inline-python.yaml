@@ -1,0 +1,17 @@
+rules:
+  - id: shell-injection-inline-python
+    pattern-regex: "python3\\s+-c\\s+\"[^\"]*\\$[A-Z_]"
+    message: >
+      Shell variable interpolated into inline python3 -c command. If the
+      variable contains quotes or special characters, this is a shell
+      injection vector. Use os.environ inside the python code instead:
+      python3 -c "import os; x = os.environ['VAR']"
+    languages: [bash]
+    severity: ERROR
+    metadata:
+      category: security
+      subcategory: shell-injection
+      property-domain: integrity
+      eedom-plugin: semgrep
+      references:
+        - https://github.com/gitrdunhq/eedom-community-rules

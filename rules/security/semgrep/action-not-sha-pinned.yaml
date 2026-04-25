@@ -1,0 +1,16 @@
+rules:
+  - id: action-not-sha-pinned
+    pattern-regex: "uses:\\s+[\\w-]+/[\\w-]+@v\\d+"
+    message: >
+      GitHub Action referenced by tag, not SHA. Tags are mutable —
+      a compromised upstream can push malicious code to the same tag.
+      Pin to the full commit SHA and add a version comment.
+    languages: [yaml]
+    severity: WARNING
+    metadata:
+      category: security
+      subcategory: supply-chain
+      property-domain: integrity
+      eedom-plugin: semgrep
+      references:
+        - https://github.com/gitrdunhq/eedom-community-rules

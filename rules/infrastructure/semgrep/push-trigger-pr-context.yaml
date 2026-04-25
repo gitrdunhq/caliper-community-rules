@@ -1,0 +1,17 @@
+rules:
+  - id: push-trigger-uses-pr-context
+    pattern-regex: "github\\.event\\.pull_request"
+    message: >
+      Workflow references pull_request event context but also triggers
+      on push. On push events, github.event.pull_request is null and
+      these references will fail. Guard with:
+      if: github.event_name == 'pull_request'
+    languages: [yaml]
+    severity: ERROR
+    metadata:
+      category: infrastructure
+      subcategory: gh-actions-context
+      property-domain: availability
+      eedom-plugin: semgrep
+      references:
+        - https://github.com/gitrdunhq/eedom-community-rules

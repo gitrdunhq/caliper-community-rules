@@ -1,0 +1,16 @@
+rules:
+  - id: gh-api-missing-statuses-permission
+    pattern-regex: "gh api.*statuses"
+    message: >
+      Workflow calls the GitHub statuses API but may not have
+      'statuses: read' or 'statuses: write' in the permissions block.
+      Verify the workflow-level permissions include the required scope.
+    languages: [yaml]
+    severity: WARNING
+    metadata:
+      category: infrastructure
+      subcategory: gh-actions-permissions
+      property-domain: availability
+      eedom-plugin: semgrep
+      references:
+        - https://github.com/gitrdunhq/eedom-community-rules
