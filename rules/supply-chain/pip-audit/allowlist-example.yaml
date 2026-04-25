@@ -1,0 +1,31 @@
+# pip-audit vulnerability allowlist — EXAMPLE
+# Use when a vulnerability is acknowledged but cannot be immediately fixed.
+# Every entry MUST have a reason, expiration date, and approver.
+#
+# Place your real allowlist in .eedom/pip-audit-allowlist.yaml in your repo.
+# Entries with a past `expires` date auto-escalate to warning severity.
+
+entries:
+  # Example 1: vulnerability in a parsing path your app never exercises
+  - package: "cryptography"
+    version: ">=38.0.0,<41.0.4"
+    vuln_id: "PYSEC-2023-EXAMPLE-001"   # <-- example ID, not a real advisory
+    reason: "Vulnerability is in X509 certificate parsing — our app does not parse external certificates"
+    expires: "2026-07-01"
+    approved_by: "security-team"
+
+  # Example 2: vulnerability only reachable in test code
+  - package: "pillow"
+    version: ">=9.0.0,<10.1.0"
+    vuln_id: "GHSA-EXAMPLE-0002"         # <-- example ID, not a real advisory
+    reason: "Only used in test fixtures for image snapshot comparison, not in production code path"
+    expires: "2026-06-15"
+    approved_by: "security-team"
+
+  # Example 3: transitive dependency with no available fix yet
+  - package: "urllib3"
+    version: ">=1.26.0,<1.26.18"
+    vuln_id: "GHSA-EXAMPLE-0003"         # <-- example ID, not a real advisory
+    reason: "Transitive dep via requests — no patched requests version yet, tracking upstream issue #1234"
+    expires: "2026-08-01"
+    approved_by: "security-team"

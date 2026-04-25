@@ -1,0 +1,18 @@
+{
+  "checks": [
+    {
+      "code": "EEDOM-AWS-003",
+      "description": "CloudWatch log groups must have a retention policy to control costs and comply with data retention requirements",
+      "impact": "Unbounded log retention increases storage costs and may violate data retention policies",
+      "resolution": "Set retention_in_days on the CloudWatch log group resource",
+      "requiredTypes": ["resource"],
+      "requiredLabels": ["aws_cloudwatch_log_group"],
+      "severity": "MEDIUM",
+      "matchSpec": {
+        "name": "retention_in_days",
+        "action": "isPresent"
+      },
+      "errorMessage": "CloudWatch log group has no retention policy (defaults to infinite retention)"
+    }
+  ]
+}

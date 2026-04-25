@@ -17,5 +17,8 @@ Infrastructure misconfigurations are the #1 cause of cloud breaches. Running as 
 
 | Directory | Scanner | File format |
 |-----------|---------|-------------|
+| `cfn-nag/` | cfn_nag | `.rb` custom rules |
+| `cdk-nag/` | cdk-nag | `.ts` examples + `.yaml` config |
+| `tfsec/` | tfsec | `.json` custom rules + `.yaml` config |
 | `kube-linter/` | kube-linter | `.yaml` check configs |
 | `clamav/` | ClamAV | `.ndb` / `.ldb` custom signatures |

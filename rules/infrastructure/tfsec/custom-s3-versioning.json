@@ -1,0 +1,18 @@
+{
+  "checks": [
+    {
+      "code": "EEDOM-AWS-001",
+      "description": "S3 buckets must have versioning enabled for data protection and recovery",
+      "impact": "Data loss from accidental deletion or overwrites cannot be recovered",
+      "resolution": "Add a versioning block with enabled = true to the S3 bucket resource",
+      "requiredTypes": ["resource"],
+      "requiredLabels": ["aws_s3_bucket"],
+      "severity": "HIGH",
+      "matchSpec": {
+        "name": "versioning",
+        "action": "isPresent"
+      },
+      "errorMessage": "S3 bucket does not have versioning enabled"
+    }
+  ]
+}

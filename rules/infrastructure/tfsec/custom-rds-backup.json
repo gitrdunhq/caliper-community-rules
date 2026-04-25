@@ -1,0 +1,19 @@
+{
+  "checks": [
+    {
+      "code": "EEDOM-AWS-002",
+      "description": "RDS instances must have backup retention of at least 7 days",
+      "impact": "Insufficient backup retention limits disaster recovery options",
+      "resolution": "Set backup_retention_period to at least 7 in the RDS instance resource",
+      "requiredTypes": ["resource"],
+      "requiredLabels": ["aws_db_instance"],
+      "severity": "HIGH",
+      "matchSpec": {
+        "name": "backup_retention_period",
+        "action": "greaterThan",
+        "value": 6
+      },
+      "errorMessage": "RDS backup retention period is less than 7 days"
+    }
+  ]
+}

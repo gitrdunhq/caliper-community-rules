@@ -1,0 +1,30 @@
+# eedom pip-audit plugin configuration
+# Place in .eedom/pip-audit.config.yaml in your repo
+
+scan_timeout: 180          # seconds — large dependency trees take time
+fail_on_unfixed: false     # don't block on vulns with no fix available
+require_hashes: false      # enable for high-security repos (pip --require-hashes)
+index_url: null            # null = use default PyPI, set for private indexes
+
+severity_map:
+  cvss_critical: critical   # CVSS >= 9.0
+  cvss_high: high           # CVSS 7.0-8.9
+  cvss_medium: warning      # CVSS 4.0-6.9
+  cvss_low: info            # CVSS 0-3.9
+
+# Sources to check
+sources:
+  - osv       # Google Open Source Vulnerability database
+  - pypi      # PyPI JSON API (advisory data)
+
+# Package allowlist — known acceptable risks
+# Each entry requires a justification and expiration date
+# See allowlist-example.yaml for the full format
+allowlist: []
+# Example:
+# - package: "setuptools"
+#   version: "<65.5.1"
+#   vuln_id: "GHSA-r9hx-vwmv-q579"
+#   reason: "Only used in build, not deployed to production"
+#   expires: "2026-06-01"
+#   approved_by: "security-team"
