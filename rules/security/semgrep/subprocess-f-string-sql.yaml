@@ -1,0 +1,22 @@
+rules:
+  - id: subprocess-f-string-sql
+    patterns:
+      - pattern-either:
+          - pattern: |
+              $CONN.execute(f"...", ...)
+          - pattern: |
+              $CONN.execute(f'...', ...)
+    message: >
+      f-string used in SQL execute call. Even if the interpolated values are
+      safe today, this pattern is fragile — a future edit could introduce
+      untrusted input. Use parameterized queries with '?' placeholders, or
+      build queries via string joining of hardcoded parts.
+    languages: [python]
+    severity: WARNING
+    metadata:
+      category: security
+      subcategory: sql-injection
+      property-domain: integrity
+      eedom-plugin: semgrep
+      references:
+        - https://github.com/gitrdunhq/eedom-community-rules
