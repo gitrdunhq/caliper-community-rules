@@ -1,0 +1,11 @@
+# eedom cdk-nag plugin configuration
+# Place in .eedom/cdk-nag.config.yaml in your repo
+
+synth_timeout: 120      # seconds to wait for cdk synth
+scan_timeout: 60        # seconds per template scan
+cdk_app: "npx ts-node bin/app.ts"  # custom synth command (default: cdk synth)
+
+# Severity mapping for cfn_nag violation types
+severity_map:
+  FAIL: critical        # security violations block merges
+  WARN: warning         # best practice deviations are advisory
