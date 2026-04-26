@@ -1,0 +1,18 @@
+rules:
+  - id: sbom-from-environment
+    pattern-either:
+      - pattern: cyclonedx-py environment ...
+      - pattern: python -m cyclonedx_py environment ...
+    message: >
+      SBOM generated from the runtime environment, not the artifact's
+      actual dependencies. Use 'cyclonedx-py requirements' with the
+      lockfile to produce an SBOM that matches what ships in the wheel.
+    languages: [bash]
+    severity: WARNING
+    metadata:
+      category: infrastructure
+      subcategory: sbom-accuracy
+      property-domain: integrity
+      eedom-plugin: semgrep
+      references:
+        - https://github.com/gitrdunhq/eedom-community-rules
