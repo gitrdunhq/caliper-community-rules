@@ -1,0 +1,39 @@
+{
+  "_kirby": {
+    "kirby_id": "KIRBY-INF-005",
+    "property_domain": "confidentiality",
+    "compliance_mappings": [
+      {"framework": "nist-800-53-r5", "controls": ["AC-3", "AC-6"]},
+      {"framework": "cis-aws-v2.0", "controls": ["2.1.2", "2.1.4"]},
+      {"framework": "soc2-tsc", "controls": ["CC6.1", "CC6.6"]},
+      {"framework": "pci-dss-v4.0", "controls": ["1.2.1"]},
+      {"framework": "iso-27001-2022", "controls": ["A.8.3"]},
+      {"framework": "aws-config", "controls": ["S3_BUCKET_PUBLIC_READ_PROHIBITED", "S3_ACCOUNT_LEVEL_PUBLIC_ACCESS_BLOCKS"]}
+    ]
+  },
+  "checks": [
+    {
+      "code": "EEDOM-AWS-004",
+      "description": "S3 buckets must have all four public access block settings enabled. An aws_s3_bucket_public_access_block resource is required with block_public_acls, block_public_policy, ignore_public_acls, and restrict_public_buckets all set to true.",
+      "impact": "Partially or fully disabled public access block settings allow S3 bucket ACLs or bucket policies to expose objects to the internet, leading to data leakage or exfiltration",
+      "resolution": "Create an aws_s3_bucket_public_access_block resource and set block_public_acls = true, block_public_policy = true, ignore_public_acls = true, and restrict_public_buckets = true",
+      "requiredTypes": [
+        "resource"
+      ],
+      "requiredLabels": [
+        "aws_s3_bucket_public_access_block"
+      ],
+      "severity": "CRITICAL",
+      "matchSpec": {
+        "action": "and",
+        "predicateMatchSpec": [
+          {"name": "block_public_acls", "action": "isTrue"},
+          {"name": "block_public_policy", "action": "isTrue"},
+          {"name": "ignore_public_acls", "action": "isTrue"},
+          {"name": "restrict_public_buckets", "action": "isTrue"}
+        ]
+      },
+      "errorMessage": "S3 bucket public access block is not fully configured — all four flags (block_public_acls, block_public_policy, ignore_public_acls, restrict_public_buckets) must be set to true"
+    }
+  ]
+}

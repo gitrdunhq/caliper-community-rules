@@ -1,0 +1,26 @@
+# KIRBY-INF-016 — FAIL case
+# Non-compliant: no capabilities.drop set, so NET_RAW and other capabilities are retained.
+# kube-linter drop-net-raw-capability check should flag this deployment.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: drop-caps-fail
+  namespace: production
+  labels:
+    app: drop-caps-fail
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: drop-caps-fail
+  template:
+    metadata:
+      labels:
+        app: drop-caps-fail
+    spec:
+      containers:
+        - name: app
+          image: nginx:1.25
+          securityContext:
+            runAsNonRoot: true
+            # No capabilities.drop — NET_RAW and other capabilities are retained by default.

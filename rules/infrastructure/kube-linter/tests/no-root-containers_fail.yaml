@@ -1,0 +1,24 @@
+# KIRBY-INF-013 — FAIL case
+# Non-compliant: no securityContext set, so runAsNonRoot defaults to false.
+# kube-linter no-run-as-root check should flag this deployment.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: no-root-fail
+  labels:
+    app: no-root-fail
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: no-root-fail
+  template:
+    metadata:
+      labels:
+        app: no-root-fail
+    spec:
+      containers:
+        - name: app
+          image: nginx:1.25
+          # No securityContext — runAsNonRoot not set, defaults to false.
+          # Container may run as root (UID 0).

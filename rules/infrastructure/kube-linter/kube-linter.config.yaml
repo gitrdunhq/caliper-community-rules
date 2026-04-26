@@ -1,0 +1,42 @@
+# eedom kube-linter plugin configuration
+# Place in .eedom/kube-linter.config.yaml in your repo
+
+# Maximum time (seconds) before the kube-linter scan is killed.
+scan_timeout: 60
+
+# Minimum kube-linter version required.
+min_version: "0.6.0"
+
+# Path to the kube-linter checks config (relative to this config).
+# This file is passed as --config to kube-linter lint.
+checks_config: "checks.yaml"
+
+# Glob patterns for K8s manifest directories/files to scan (relative to repo root).
+# eedom passes these as positional arguments to kube-linter lint.
+target_paths:
+  - "k8s/"
+  - "kubernetes/"
+  - "deploy/"
+  - "manifests/"
+  - "helm/"
+  - "charts/"
+
+# Glob patterns to exclude from scanning.
+exclude_paths:
+  - "**/tests/**"
+  - "**/test/**"
+  - "**/.git/**"
+
+# Maps kube-linter severity to eedom severity.
+severity_map:
+  CRITICAL: critical
+  HIGH: high
+  MEDIUM: warning
+  LOW: info
+
+# Minimum severity to report (below this level findings are dropped).
+minimum_severity: LOW
+
+# Additional arguments passed directly to the kube-linter CLI.
+# --format json is required for eedom's structured output parser.
+extra_args: ["--format", "json"]

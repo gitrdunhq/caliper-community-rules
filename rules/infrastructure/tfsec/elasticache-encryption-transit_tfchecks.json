@@ -1,0 +1,30 @@
+{
+  "_kirby": {
+    "kirby_id": "KIRBY-INF-028",
+    "property_domain": "confidentiality",
+    "compliance_mappings": [
+      {"framework": "nist-800-53-r5", "controls": ["SC-8"]},
+      {"framework": "pci-dss-v4.0", "controls": ["4.2.1"]}
+    ]
+  },
+  "checks": [
+    {
+      "code": "EEDOM-AWS-016",
+      "description": "ElastiCache replication groups must have in-transit encryption enabled to protect cache data in motion",
+      "impact": "Without TLS, all Redis/Memcached traffic between the application and cache nodes is transmitted in plaintext on the VPC network, exposing session tokens, PII, and other sensitive cache values to network-level eavesdropping",
+      "resolution": "Set transit_encryption_enabled = true on the aws_elasticache_replication_group resource. Note: changing this setting requires replacing the replication group",
+      "requiredTypes": [
+        "resource"
+      ],
+      "requiredLabels": [
+        "aws_elasticache_replication_group"
+      ],
+      "severity": "MEDIUM",
+      "matchSpec": {
+        "name": "transit_encryption_enabled",
+        "action": "isTrue"
+      },
+      "errorMessage": "ElastiCache replication group does not have in-transit encryption enabled (transit_encryption_enabled must be true)"
+    }
+  ]
+}

@@ -19,6 +19,7 @@ Code that ships with security defects creates liability, enables breaches, and e
 | Directory | Scanner | File format |
 |-----------|---------|-------------|
 | `semgrep/` | Semgrep | `.yaml` rules + test files |
+| `bandit/` | Bandit | `.yaml` profile + config |
 | `gitleaks/` | Gitleaks | `.toml` custom patterns |
 | `opa/` | OPA | `.rego` policies + `_test.rego` |
 

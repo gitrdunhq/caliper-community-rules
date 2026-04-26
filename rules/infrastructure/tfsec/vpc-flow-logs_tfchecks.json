@@ -1,0 +1,33 @@
+{
+  "_kirby": {
+    "kirby_id": "KIRBY-INF-010",
+    "property_domain": "non-repudiation",
+    "compliance_mappings": [
+      {"framework": "cis-aws-v2.0", "controls": ["3.9"]},
+      {"framework": "nist-800-53-r5", "controls": ["AU-2", "AU-3"]},
+      {"framework": "soc2-tsc", "controls": ["CC7.2"]},
+      {"framework": "pci-dss-v4.0", "controls": ["10.1"]},
+      {"framework": "aws-config", "controls": ["VPC_FLOW_LOGS_ENABLED"]}
+    ]
+  },
+  "checks": [
+    {
+      "code": "EEDOM-AWS-008",
+      "description": "VPC flow logs must be enabled to capture IP traffic metadata for audit and incident response. An aws_flow_log resource with vpc_id set is required. Note: tfsec custom checks cannot validate that every aws_vpc resource has a corresponding aws_flow_log — this check verifies that VPC-scoped flow log resources exist and are correctly formed.",
+      "impact": "Without VPC flow logs, network-level traffic to and from EC2 instances is invisible. Attackers can perform lateral movement, data exfiltration, or reconnaissance with no audit trail",
+      "resolution": "Create an aws_flow_log resource referencing the VPC via vpc_id. Set traffic_type to ALL (not ACCEPT or REJECT only) and configure log_destination to CloudWatch Logs or S3",
+      "requiredTypes": [
+        "resource"
+      ],
+      "requiredLabels": [
+        "aws_flow_log"
+      ],
+      "severity": "HIGH",
+      "matchSpec": {
+        "name": "vpc_id",
+        "action": "isPresent"
+      },
+      "errorMessage": "VPC flow log resource is missing vpc_id — flow logs must be associated with a VPC"
+    }
+  ]
+}

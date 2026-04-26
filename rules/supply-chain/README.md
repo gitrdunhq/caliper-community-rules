@@ -17,6 +17,7 @@ Your code is only as secure as its weakest dependency. Supply chain attacks (typ
 
 | Directory | Scanner | File format |
 |-----------|---------|-------------|
+| `pip-audit/` | pip-audit | `.yaml` config + allowlists |
 | `osv/` | OSV-Scanner | `.json` override configs |
 | `trivy/` | Trivy | `.yaml` ignore/policy files |
 | `scancode/` | ScanCode | `.json` license policy configs |

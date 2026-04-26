@@ -1,0 +1,34 @@
+{
+  "_kirby": {
+    "kirby_id": "KIRBY-SEC-006",
+    "property_domain": "confidentiality",
+    "compliance_mappings": [
+      {"framework": "cis-aws-v2.0", "controls": ["1.4"]},
+      {"framework": "nist-800-53-r5", "controls": ["AC-6(2)"]},
+      {"framework": "soc2-tsc", "controls": ["CC6.1"]},
+      {"framework": "pci-dss-v4.0", "controls": ["7.1.1", "8.2.2"]},
+      {"framework": "iso-27001-2022", "controls": ["A.5.15"]}
+    ]
+  },
+  "checks": [
+    {
+      "code": "EEDOM-AWS-011",
+      "description": "AWS root account access keys must not exist — root credentials bypass all IAM policies and give unrestricted account access",
+      "impact": "Root account access keys cannot be scoped by IAM policies. A compromised root key gives an attacker complete, irrevocable control of the AWS account including the ability to delete all users, disable CloudTrail, and destroy all resources.",
+      "resolution": "Delete the aws_iam_access_key resource referencing the root user. Use a least-privilege IAM user or role with only the permissions required for the task.",
+      "requiredTypes": [
+        "resource"
+      ],
+      "requiredLabels": [
+        "aws_iam_access_key"
+      ],
+      "severity": "CRITICAL",
+      "matchSpec": {
+        "name": "user",
+        "action": "notEqual",
+        "value": "root"
+      },
+      "errorMessage": "aws_iam_access_key references the root user. Root account access keys must never be created — remove this resource and replace it with a least-privilege IAM user (CIS AWS v2.0 § 1.4)"
+    }
+  ]
+}

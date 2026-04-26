@@ -1,0 +1,96 @@
+# Kirby Rule Schema v1.0
+# Every rule in eedom-community-rules MUST carry this metadata.
+# Scanner-native format varies (Semgrep YAML, tfsec JSON, cfn-nag Ruby),
+# but compliance_mappings and kirby_id are universal.
+
+schema_version: "1.0"
+
+fields:
+  kirby_id:
+    type: string
+    required: true
+    format: "KIRBY-<CAT>-<NNN>"
+    description: Unique rule identifier across the entire Kirby catalog
+    categories:
+      SEC: security
+      INF: infrastructure
+      SCM: supply-chain
+      QUA: code-quality
+      STD: standards
+      CON: content
+
+  name:
+    type: string
+    required: true
+    description: Human-readable rule name (kebab-case, matches filename)
+
+  description:
+    type: string
+    required: true
+    description: What this rule catches and why it matters
+
+  scanner:
+    type: string
+    required: true
+    enum: [semgrep, tfsec, cfn-nag, cdk-nag, opa, kube-linter, bandit, trivy, gitleaks, custom]
+
+  severity:
+    type: string
+    required: true
+    enum: [critical, high, medium, low, info]
+    description: Eedom-normalized severity
+
+  targets:
+    type: array
+    required: true
+    items: string
+    description: "File types or languages: python, java, go, js-ts, terraform, cloudformation, k8s, dockerfile"
+
+  compliance_mappings:
+    type: array
+    required: false
+    description: Maps this rule to canonical control IDs across compliance frameworks
+    items:
+      framework:
+        type: string
+        enum:
+          - nist-800-53-r5
+          - cis-aws-v2.0
+          - cis-k8s-v1.7
+          - cis-docker-v1.6
+          - cis-azure-v2.0
+          - cis-gcp-v2.0
+          - owasp-top10-2021
+          - owasp-asvs-v4.0
+          - pci-dss-v4.0
+          - hipaa-security
+          - iso-27001-2022
+          - soc2-tsc
+          - fedramp-moderate
+          - disa-stig
+          - aws-config
+      controls:
+        type: array
+        items: string
+        description: Canonical control IDs from the framework
+
+  property_domain:
+    type: string
+    required: false
+    enum: [integrity, confidentiality, availability, determinism, uniqueness, non-repudiation, idempotency, atomicity, monotonicity, ordering, isolation, boundedness, linearity, reversibility]
+    description: DPS-12 property domain this rule validates
+
+  references:
+    type: array
+    required: false
+    items: string
+    description: URLs to official documentation for the control
+
+# Where compliance_mappings live in each scanner format:
+#
+# Semgrep:  metadata.kirby_id, metadata.compliance_mappings (native YAML)
+# tfsec:    _kirby block at top of JSON (ignored by tfsec, parsed by eedom)
+# cfn-nag:  COMPLIANCE constant hash in Ruby class
+# OPA:      annotation block in Rego
+# Bandit:   bandit.config.yaml kirby_rules section
+# Config:   README.md compliance table

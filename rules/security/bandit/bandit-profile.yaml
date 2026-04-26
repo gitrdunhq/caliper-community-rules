@@ -1,0 +1,67 @@
+# eedom curated Bandit profile
+# Enables security-critical checks, disables low-signal noise.
+#
+# Usage:
+#   bandit -c bandit-profile.yaml -r src/
+#
+# Philosophy: Enable checks that catch real vulnerabilities with
+# actionable fixes. Skip checks that generate noise without security
+# value in modern Python codebases.
+#
+# Bandit config format uses top-level `tests` and `skips` keys.
+# See: https://bandit.readthedocs.io/en/latest/config.html
+
+tests:
+  # --- Injection & dangerous execution ---
+  - B101  # assert_used -- assert is stripped by python -O, never use for security checks
+  - B102  # exec_used -- arbitrary code execution
+  - B103  # set_bad_file_permissions -- overly permissive chmod (0o777, 0o666)
+  - B104  # hardcoded_bind_all_interfaces -- binding 0.0.0.0 exposes to all interfaces
+
+  # --- Hardcoded secrets ---
+  - B105  # hardcoded_password_string -- password = "literal"
+  - B106  # hardcoded_password_funcarg -- func(password="literal")
+  - B107  # hardcoded_password_default -- def func(password="default")
+  - B108  # hardcoded_tmp_directory -- /tmp paths vulnerable to symlink attacks
+
+  # --- Error handling ---
+  - B110  # try_except_pass -- silently swallowing exceptions hides security failures
+
+  # --- Cryptography ---
+  - B303  # md5 -- broken hash, collision attacks are trivial
+  - B304  # des -- broken cipher, brute-forceable
+  - B305  # cipher -- insecure cipher modes (ECB)
+  - B307  # eval -- eval() executes arbitrary code, same risk class as exec()
+  - B311  # random -- stdlib random is not cryptographically secure
+
+  # --- Unsafe deserialization ---
+  - B301  # pickle -- arbitrary code execution via crafted payloads
+  - B302  # marshal -- same risk class as pickle
+  - B306  # mktemp_q -- tempfile.mktemp() race condition
+  - B506  # yaml_load -- yaml.load() without SafeLoader allows arbitrary code execution
+
+  # --- Shell injection ---
+  - B601  # paramiko_calls -- SSH command execution with user input
+  - B602  # subprocess_popen_with_shell_equals_true -- the classic shell injection
+  - B603  # subprocess_without_shell_equals_true -- subprocess with untrusted input
+  - B604  # any_other_function_with_shell_equals_true -- shell=True on any call
+  - B605  # start_process_with_a_shell -- os.system(), os.popen()
+  - B606  # start_process_with_no_shell -- os.execl() with untrusted input
+  - B607  # start_process_with_partial_path -- PATH injection via relative paths
+
+  # --- SQL injection ---
+  - B608  # hardcoded_sql_expressions -- string concatenation in SQL queries
+
+  # --- Network ---
+  # B309 (httpsconnection) removed -- dropped from recent Bandit versions
+  - B310  # urllib_urlopen -- urlopen with unvalidated URLs
+
+  # --- Template injection ---
+  - B701  # jinja2_autoescape_false -- XSS via unescaped template output
+  - B702  # use_of_mako_templates -- Mako has no autoescaping by default
+  - B703  # django_mark_safe -- mark_safe() on user-controlled content
+
+# Checks explicitly excluded from this profile.
+# Add checks here (with a comment explaining why) if they produce
+# unacceptable false-positive rates in your codebase.
+skips: []

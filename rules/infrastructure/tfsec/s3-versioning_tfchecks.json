@@ -1,0 +1,36 @@
+{
+  "_kirby": {
+    "kirby_id": "KIRBY-INF-001",
+    "property_domain": "availability",
+    "compliance_mappings": [
+      {"framework": "nist-800-53-r5", "controls": ["CP-9", "CP-10"]},
+      {"framework": "soc2-tsc", "controls": ["A1.2"]},
+      {"framework": "aws-config", "controls": ["S3_BUCKET_VERSIONING_ENABLED"]}
+    ]
+  },
+  "checks": [
+    {
+      "code": "EEDOM-AWS-001",
+      "description": "S3 buckets must have versioning enabled for data protection and recovery",
+      "impact": "Data loss from accidental deletion or overwrites cannot be recovered",
+      "resolution": "Create an aws_s3_bucket_versioning resource with versioning_configuration.status set to Enabled",
+      "requiredTypes": [
+        "resource"
+      ],
+      "requiredLabels": [
+        "aws_s3_bucket_versioning"
+      ],
+      "severity": "HIGH",
+      "matchSpec": {
+        "name": "versioning_configuration",
+        "action": "isPresent",
+        "subMatch": {
+          "name": "status",
+          "action": "equals",
+          "value": "Enabled"
+        }
+      },
+      "errorMessage": "S3 bucket does not have versioning enabled (requires aws_s3_bucket_versioning resource with status = Enabled)"
+    }
+  ]
+}

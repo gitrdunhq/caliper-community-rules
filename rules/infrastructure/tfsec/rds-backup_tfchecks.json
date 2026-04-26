@@ -1,0 +1,30 @@
+{
+  "_kirby": {
+    "kirby_id": "KIRBY-INF-002",
+    "property_domain": "availability",
+    "compliance_mappings": [
+      {"framework": "nist-800-53-r5", "controls": ["CP-9"]},
+      {"framework": "soc2-tsc", "controls": ["A1.2"]},
+      {"framework": "pci-dss-v4.0", "controls": ["12.10.1"]},
+      {"framework": "hipaa-security", "controls": ["164.308(a)(7)(ii)(A)"]},
+      {"framework": "aws-config", "controls": ["DB_INSTANCE_BACKUP_ENABLED"]}
+    ]
+  },
+  "checks": [
+    {
+      "code": "EEDOM-AWS-002",
+      "description": "RDS instances must have backup retention of at least 7 days",
+      "impact": "Insufficient backup retention limits disaster recovery options",
+      "resolution": "Set backup_retention_period to at least 7 in the RDS instance resource",
+      "requiredTypes": ["resource"],
+      "requiredLabels": ["aws_db_instance"],
+      "severity": "HIGH",
+      "matchSpec": {
+        "name": "backup_retention_period",
+        "action": "greaterThan",
+        "value": 6
+      },
+      "errorMessage": "RDS backup retention period is less than 7 days"
+    }
+  ]
+}

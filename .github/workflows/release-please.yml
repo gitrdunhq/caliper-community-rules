@@ -1,0 +1,52 @@
+name: Release
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  release-please:
+    runs-on: ubuntu-latest
+    outputs:
+      release_created: ${{ steps.release.outputs.release_created }}
+      tag_name: ${{ steps.release.outputs.tag_name }}
+    steps:
+      - uses: googleapis/release-please-action@8b8fd2cc23b2e18957157a9d923d75aa0c6f6ad5 # v4
+        id: release
+        with:
+          config-file: release-please-config.json
+          manifest-file: .release-please-manifest.json
+
+  package:
+    needs: release-please
+    if: needs.release-please.outputs.release_created == 'true'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+
+      - name: Package rules
+        run: |
+          TAG="${{ needs.release-please.outputs.tag_name }}"
+          tar czf "eedom-community-rules-${TAG}.tar.gz" \
+            --exclude='*/tests/*' \
+            --exclude='.github' \
+            rules/ \
+            kirby-rule-schema.yaml \
+            compliance-catalog.yaml \
+            LICENSE \
+            README.md \
+            CHANGELOG.md
+
+      - name: Upload to release
+        run: |
+          TAG="${{ needs.release-please.outputs.tag_name }}"
+          gh release upload "$TAG" "eedom-community-rules-${TAG}.tar.gz"
+        env:
+          GH_TOKEN: ${{ github.token }}

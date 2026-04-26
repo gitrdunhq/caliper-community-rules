@@ -1,0 +1,26 @@
+# KIRBY-INF-018 — FAIL case
+# Non-compliant: readOnlyRootFilesystem not set, so the root filesystem is writable.
+# kube-linter read-only-root-fs check should flag this deployment.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ro-rootfs-fail
+  namespace: production
+  labels:
+    app: ro-rootfs-fail
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ro-rootfs-fail
+  template:
+    metadata:
+      labels:
+        app: ro-rootfs-fail
+    spec:
+      containers:
+        - name: app
+          image: nginx:1.25
+          securityContext:
+            runAsNonRoot: true
+            # readOnlyRootFilesystem not set — defaults to false, root filesystem is writable.

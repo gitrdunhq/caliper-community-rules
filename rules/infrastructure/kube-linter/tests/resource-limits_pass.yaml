@@ -1,0 +1,34 @@
+# KIRBY-INF-019 — PASS case
+# Compliant: both resources.limits.cpu and resources.limits.memory are set,
+# and requests are also set so the scheduler can place the pod correctly.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: resource-limits-pass
+  namespace: production
+  labels:
+    app: resource-limits-pass
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: resource-limits-pass
+  template:
+    metadata:
+      labels:
+        app: resource-limits-pass
+    spec:
+      securityContext:
+        runAsNonRoot: true
+      containers:
+        - name: app
+          image: nginx:1.25
+          securityContext:
+            runAsNonRoot: true
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "128Mi"
+            limits:
+              cpu: "500m"
+              memory: "256Mi"

@@ -1,0 +1,23 @@
+# KIRBY-INF-017 — FAIL case
+# Non-compliant: metadata.namespace is set to "default".
+# kube-linter default-namespace check should flag this deployment.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ns-fail
+  namespace: default
+  labels:
+    app: ns-fail
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ns-fail
+  template:
+    metadata:
+      labels:
+        app: ns-fail
+    spec:
+      containers:
+        - name: app
+          image: nginx:1.25

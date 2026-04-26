@@ -1,0 +1,23 @@
+rules:
+  - id: docker-copy-over-add
+    pattern: ADD $SRC $DST
+    message: >
+      Use COPY instead of ADD in Dockerfiles. ADD auto-extracts archives and
+      can fetch remote URLs, which introduces supply chain risk and makes builds
+      less predictable. Use COPY for local files and explicit curl/wget for
+      remote resources.
+    languages: [dockerfile]
+    severity: INFO
+    metadata:
+      kirby_id: KIRBY-INF-021
+      category: infrastructure
+      subcategory: dockerfile-best-practices
+      property-domain: integrity
+      eedom-plugin: semgrep
+      compliance_mappings:
+        - framework: cis-docker-v1.6
+          controls: ["4.9"]
+      references:
+        - https://docs.docker.com/develop/develop-images/instructions/#add-or-copy
+        - https://www.cisecurity.org/benchmark/docker
+        - https://github.com/gitrdunhq/eedom-community-rules

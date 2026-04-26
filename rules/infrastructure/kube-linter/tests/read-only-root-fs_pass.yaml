@@ -1,0 +1,37 @@
+# KIRBY-INF-018 — PASS case
+# Compliant: readOnlyRootFilesystem is true; writable paths are mounted via emptyDir.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ro-rootfs-pass
+  namespace: production
+  labels:
+    app: ro-rootfs-pass
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ro-rootfs-pass
+  template:
+    metadata:
+      labels:
+        app: ro-rootfs-pass
+    spec:
+      securityContext:
+        runAsNonRoot: true
+      containers:
+        - name: app
+          image: nginx:1.25
+          securityContext:
+            readOnlyRootFilesystem: true
+            runAsNonRoot: true
+          volumeMounts:
+            - name: tmp
+              mountPath: /tmp
+            - name: varrun
+              mountPath: /var/run
+      volumes:
+        - name: tmp
+          emptyDir: {}
+        - name: varrun
+          emptyDir: {}

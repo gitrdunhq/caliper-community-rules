@@ -1,0 +1,33 @@
+rules:
+  - id: docker-user-directive-required
+    patterns:
+      # Flag any FROM instruction that is not followed by a USER directive
+      # before the final CMD or ENTRYPOINT.  We match the CMD/ENTRYPOINT
+      # instruction and require that no USER instruction appeared before it.
+      - pattern-either:
+          - pattern: CMD ...
+          - pattern: ENTRYPOINT ...
+      - pattern-not-inside: |
+          USER ...
+          ...
+    message: >
+      Dockerfile does not set a USER directive. Containers will run as root by
+      default, which grants unnecessary privileges. Add 'USER nonroot' or
+      similar after installing packages.
+    languages: [dockerfile]
+    severity: WARNING
+    metadata:
+      kirby_id: KIRBY-INF-020
+      category: infrastructure
+      subcategory: dockerfile-best-practices
+      property-domain: confidentiality
+      eedom-plugin: semgrep
+      compliance_mappings:
+        - framework: cis-docker-v1.6
+          controls: ["4.1"]
+        - framework: nist-800-53-r5
+          controls: ["AC-6"]
+      references:
+        - https://docs.docker.com/develop/develop-images/instructions/#user
+        - https://www.cisecurity.org/benchmark/docker
+        - https://github.com/gitrdunhq/eedom-community-rules

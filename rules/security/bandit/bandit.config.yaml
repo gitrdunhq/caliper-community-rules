@@ -1,0 +1,58 @@
+# eedom Bandit plugin configuration
+# Place in .eedom/bandit.config.yaml in your repo
+
+# Maximum time (seconds) before the Bandit scan is killed.
+# Large monorepos may need longer; 120s covers most projects.
+scan_timeout: 120
+
+# Directories to scan. Paths are relative to repo root.
+target_dirs:
+  - "src/"
+  - "lib/"
+  - "app/"
+
+# Directories to exclude from scanning.
+# Tests often contain intentional security anti-patterns (test fixtures).
+# Virtual environments and vendored code produce noise, not signal.
+exclude_dirs:
+  - "tests/"
+  - "test/"
+  - "venv/"
+  - ".venv/"
+  - "node_modules/"
+  - ".tox/"
+  - "build/"
+  - "dist/"
+
+# Maps Bandit severity + confidence to eedom severity.
+# Format: <BANDIT_SEVERITY>_<BANDIT_CONFIDENCE>
+#
+# HIGH + HIGH   = confirmed dangerous pattern -> critical
+# HIGH + MEDIUM = likely dangerous pattern    -> high
+# MEDIUM + HIGH = confirmed moderate risk     -> high
+# MEDIUM + MED  = moderate risk, moderate confidence -> warning
+# LOW + any     = informational, style-level  -> info
+severity_map:
+  HIGH_HIGH: critical
+  HIGH_MEDIUM: high
+  HIGH_LOW: warning
+  MEDIUM_HIGH: high
+  MEDIUM_MEDIUM: warning
+  MEDIUM_LOW: info
+  LOW_HIGH: info
+  LOW_MEDIUM: info
+  LOW_LOW: info
+
+# Bandit checks to skip globally.
+# Override with care -- each skip is a blind spot.
+# Example: ["B101"] to skip assert_used in projects that use assert intentionally.
+skips: []
+
+# Additional arguments passed directly to the bandit CLI.
+# --format json : structured output for eedom parsing
+# -ll           : only report MEDIUM severity and above (reduces noise)
+extra_args: ["--format", "json"]
+
+# Path to the curated Bandit profile (relative to this config).
+# If set, bandit runs with -c <profile_path>.
+profile: "bandit-profile.yaml"

@@ -1,0 +1,40 @@
+# eedom pip-audit plugin configuration
+# Place in .eedom/pip-audit.config.yaml in your repo
+
+scan_timeout: 180          # seconds -- large dependency trees take time
+fail_on_unfixed: false     # do not block on vulns with no fix available
+require_hashes: false      # enable for high-security repos (pip --require-hashes)
+index_url: null            # null = use default PyPI, set for private indexes
+
+# Severity mapping for pip-audit findings.
+#
+# NOTE: pip-audit emits vulnerability IDs (GHSA/CVE/PYSEC) and fix versions,
+# NOT raw CVSS scores. Mapping to eedom severity requires either:
+#   (a) An advisory enrichment step that fetches CVSS from OSV/NVD, or
+#   (b) Simpler heuristics based on what pip-audit actually provides.
+#
+# The mapping below uses heuristics available directly from pip-audit output.
+# If your pipeline includes an advisory enrichment step that resolves CVSS
+# scores, replace this with a CVSS-based severity_map.
+severity_map:
+  has_fix_known_exploited: critical   # fix available + CISA KEV / known exploit
+  has_fix: high                       # fix available, upgrade should be prioritized
+  no_fix_known_exploited: high        # no fix yet but actively exploited
+  no_fix: warning                     # no fix available, monitor for updates
+
+# Sources to check
+sources:
+  - osv       # Google Open Source Vulnerability database
+  - pypi      # PyPI JSON API (advisory data)
+
+# Package allowlist -- known acceptable risks
+# Each entry requires a justification and expiration date
+# See allowlist-example.yaml for the full format
+allowlist: []
+# Example:
+# - package: "setuptools"
+#   version: "<65.5.1"
+#   vuln_id: "GHSA-r9hx-vwmv-q579"
+#   reason: "Only used in build, not deployed to production"
+#   expires: "2026-06-01"
+#   approved_by: "security-team"

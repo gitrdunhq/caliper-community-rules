@@ -1,0 +1,35 @@
+{
+  "_kirby": {
+    "kirby_id": "KIRBY-INF-006",
+    "property_domain": "confidentiality",
+    "compliance_mappings": [
+      {"framework": "nist-800-53-r5", "controls": ["SC-28"]},
+      {"framework": "cis-aws-v2.0", "controls": ["2.3.1"]},
+      {"framework": "soc2-tsc", "controls": ["CC6.1"]},
+      {"framework": "pci-dss-v4.0", "controls": ["3.5.1"]},
+      {"framework": "hipaa-security", "controls": ["164.312(a)(2)(iv)"]},
+      {"framework": "iso-27001-2022", "controls": ["A.8.24"]},
+      {"framework": "aws-config", "controls": ["RDS_STORAGE_ENCRYPTED"]}
+    ]
+  },
+  "checks": [
+    {
+      "code": "EEDOM-AWS-005",
+      "description": "RDS instances must have storage encryption enabled to protect data at rest",
+      "impact": "Unencrypted RDS storage exposes sensitive data if the underlying EBS volumes are accessed directly or if a snapshot is shared or restored outside the account",
+      "resolution": "Set storage_encrypted = true on the aws_db_instance resource. Note: encryption cannot be enabled on an existing unencrypted instance — a snapshot restore to a new encrypted instance is required",
+      "requiredTypes": [
+        "resource"
+      ],
+      "requiredLabels": [
+        "aws_db_instance"
+      ],
+      "severity": "HIGH",
+      "matchSpec": {
+        "name": "storage_encrypted",
+        "action": "isTrue"
+      },
+      "errorMessage": "RDS instance does not have storage encryption enabled (storage_encrypted must be true)"
+    }
+  ]
+}
