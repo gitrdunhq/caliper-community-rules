@@ -17,11 +17,12 @@ rules:
               metavariable: $ARN
               regex: '"arn:aws:iam::[0-9]{12}:root"'
     message: >
-      AWS root account credentials detected. Hardcoded root access keys (AKIA prefix)
-      or root user ARNs (arn:aws:iam::<account>:root) must never appear in code.
-      Root credentials have unrestricted access to all AWS services and cannot be
-      scoped by IAM policies. Rotate and delete the root access key immediately,
-      then replace with a least-privilege IAM role or instance profile.
+      Hardcoded AWS credentials or a root user ARN detected. This rule matches
+      hardcoded AWS access key IDs (for example, AKIA-prefixed keys) used in boto3
+      calls, as well as root user ARNs (arn:aws:iam::<account>:root). These values
+      must never appear in code. Rotate and remove any exposed access key, and if
+      the finding refers to the root account, stop using root credentials and
+      replace them with a least-privilege IAM role or instance profile.
     languages: [python]
     severity: ERROR
     metadata:
