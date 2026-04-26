@@ -24,10 +24,24 @@
       ],
       "severity": "HIGH",
       "matchSpec": {
-        "name": "vpc_id",
-        "action": "isPresent"
+        "action": "and",
+        "predicateMatchSpec": [
+          {
+            "name": "vpc_id",
+            "action": "isPresent"
+          },
+          {
+            "name": "traffic_type",
+            "action": "equals",
+            "value": "ALL"
+          },
+          {
+            "name": "log_destination",
+            "action": "isPresent"
+          }
+        ]
       },
-      "errorMessage": "VPC flow log resource is missing vpc_id — flow logs must be associated with a VPC"
+      "errorMessage": "VPC flow log resource must include vpc_id, set traffic_type to ALL, and configure log_destination"
     }
   ]
 }
