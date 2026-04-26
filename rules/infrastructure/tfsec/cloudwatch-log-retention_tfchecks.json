@@ -1,4 +1,13 @@
 {
+  "_kirby": {
+    "kirby_id": "KIRBY-INF-003",
+    "property_domain": "availability",
+    "compliance_mappings": [
+      {"framework": "nist-800-53-r5", "controls": ["AU-11"]},
+      {"framework": "soc2-tsc", "controls": ["CC7.2"]},
+      {"framework": "pci-dss-v4.0", "controls": ["10.5.1"]}
+    ]
+  },
   "checks": [
     {
       "code": "EEDOM-AWS-003",

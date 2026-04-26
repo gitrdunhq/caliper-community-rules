@@ -1,4 +1,13 @@
 {
+  "_kirby": {
+    "kirby_id": "KIRBY-INF-001",
+    "property_domain": "availability",
+    "compliance_mappings": [
+      {"framework": "nist-800-53-r5", "controls": ["CP-9", "CP-10"]},
+      {"framework": "soc2-tsc", "controls": ["A1.2"]},
+      {"framework": "aws-config", "controls": ["S3_BUCKET_VERSIONING_ENABLED"]}
+    ]
+  },
   "checks": [
     {
       "code": "EEDOM-AWS-001",

@@ -4,6 +4,19 @@ require 'cfn-nag/violation'
 require 'cfn-nag/custom_rules/base'
 
 class S3PublicAccessRule < BaseRule
+  COMPLIANCE = {
+    kirby_id: 'KIRBY-INF-005',
+    property_domain: 'confidentiality',
+    compliance_mappings: [
+      { framework: 'nist-800-53-r5', controls: ['AC-3', 'AC-6'] },
+      { framework: 'cis-aws-v2.0', controls: ['2.1.2', '2.1.4'] },
+      { framework: 'soc2-tsc', controls: ['CC6.1', 'CC6.6'] },
+      { framework: 'pci-dss-v4.0', controls: ['1.2.1'] },
+      { framework: 'iso-27001-2022', controls: ['A.8.3'] },
+      { framework: 'aws-config', controls: ['S3_BUCKET_PUBLIC_READ_PROHIBITED', 'S3_ACCOUNT_LEVEL_PUBLIC_ACCESS_BLOCKS'] }
+    ]
+  }.freeze
+
   def rule_text
     'S3 bucket should have PublicAccessBlockConfiguration with all four flags set to true'
   end

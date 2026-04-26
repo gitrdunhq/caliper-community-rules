@@ -25,9 +25,17 @@ rules:
         - "*release*"
         - "*check*"
     metadata:
+      kirby_id: KIRBY-SEC-004
       category: security
       subcategory: fail-open-gate
       property-domain: integrity
       eedom-plugin: semgrep
+      compliance_mappings:
+        - framework: nist-800-53-r5
+          controls: ["CM-6", "SA-11"]
+        - framework: iso-27001-2022
+          controls: ["A.8.25"]
+        - framework: soc2-tsc
+          controls: ["CC8.1"]
       references:
         - https://github.com/gitrdunhq/eedom-community-rules

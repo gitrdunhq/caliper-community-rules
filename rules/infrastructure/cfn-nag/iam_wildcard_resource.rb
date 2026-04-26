@@ -4,6 +4,20 @@ require 'cfn-nag/violation'
 require 'cfn-nag/custom_rules/base'
 
 class IamWildcardResourceRule < BaseRule
+  COMPLIANCE = {
+    kirby_id: 'KIRBY-INF-004',
+    property_domain: 'confidentiality',
+    compliance_mappings: [
+      { framework: 'nist-800-53-r5', controls: ['AC-6(1)'] },
+      { framework: 'cis-aws-v2.0', controls: ['1.16'] },
+      { framework: 'owasp-asvs-v4.0', controls: ['V4.1.1'] },
+      { framework: 'soc2-tsc', controls: ['CC6.1'] },
+      { framework: 'pci-dss-v4.0', controls: ['7.1.1'] },
+      { framework: 'iso-27001-2022', controls: ['A.5.15'] },
+      { framework: 'aws-config', controls: ['IAM_POLICY_NO_STATEMENTS_WITH_ADMIN_ACCESS'] }
+    ]
+  }.freeze
+
   def rule_text
     'IAM policy should not allow * resource â scope to specific ARNs'
   end
