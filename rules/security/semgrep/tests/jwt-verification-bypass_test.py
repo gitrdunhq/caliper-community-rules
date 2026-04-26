@@ -1,8 +1,8 @@
 """
 Semgrep test file for jwt-verification-bypass (KIRBY-SEC-011).
 
-Positive cases are annotated with:  # ruleid: jwt-verification-bypass
-Negative cases are annotated with:  # ok: jwt-verification-bypass
+Positive cases are annotated with:  ruleid: jwt-verification-bypass
+Negative cases are annotated with:  ok: jwt-verification-bypass
 
 Run with:
   semgrep --test rules/security/semgrep/jwt-verification-bypass.yaml \

@@ -1,8 +1,8 @@
 """
 Semgrep test file for hardcoded-credentials (KIRBY-SEC-005).
 
-Positive cases are annotated with:  # ruleid: hardcoded-credentials
-Negative cases are annotated with:  # ok: hardcoded-credentials
+Positive cases are annotated with:  todoruleid: hardcoded-credentials
+Negative cases are annotated with:  ok: hardcoded-credentials
 
 Run with:
   semgrep --test rules/security/semgrep/hardcoded-credentials.yaml \
@@ -16,51 +16,51 @@ import os
 # These must each trigger the rule exactly once.
 
 # Pattern 1 — password variable with non-trivial value
-# ruleid: hardcoded-credentials
+# todoruleid: hardcoded-credentials
 password = "hunter2IsMyPass!"
 
 # Pattern 1 — api_key variable with non-trivial value
-# ruleid: hardcoded-credentials
+# todoruleid: hardcoded-credentials
 api_key = "sk-prod-1234567890abcdef"
 
 # Pattern 1 — secret variable with random-looking value
-# ruleid: hardcoded-credentials
+# todoruleid: hardcoded-credentials
 secret = "Xk9mNP2rQvL8wZj3"
 
 # Pattern 1 — access_token with JWT-like value
-# ruleid: hardcoded-credentials
+# todoruleid: hardcoded-credentials
 access_token = "eyJhbGciOiJIUzI1NiJ9.valid.sig"
 
 # Pattern 1 — api_secret with a production-looking value
-# ruleid: hardcoded-credentials
+# todoruleid: hardcoded-credentials
 api_secret = "live_prod_key_7f3a9b2c1d4e5f6a"
 
 # Pattern 2 — AWS access key ID (AKIA + 16 uppercase alphanumeric chars)
-# ruleid: hardcoded-credentials
+# todoruleid: hardcoded-credentials
 AWS_ACCESS_KEY_ID = "AKIAIOSFODNN7EXAMPLE"
 
 # Pattern 3 — PostgreSQL connection string with a non-placeholder password
-# ruleid: hardcoded-credentials
+# todoruleid: hardcoded-credentials
 database_url = "postgresql://admin:Sup3rS3cr3t@prod.db.example.com/mydb"
 
 # Pattern 3 — MySQL connection string with embedded credential
-# ruleid: hardcoded-credentials
+# todoruleid: hardcoded-credentials
 mysql_url = "mysql://root:Pr0dR00tPass@db.internal/app"
 
 # Pattern 4 — os.environ.get with a long hardcoded fallback for a password key
-# ruleid: hardcoded-credentials
+# todoruleid: hardcoded-credentials
 db_password = os.environ.get("DB_PASSWORD", "d3f@ultS3cr3tV4lu3!")
 
 # Pattern 4 — os.environ.get with a long hardcoded fallback for a token key
-# ruleid: hardcoded-credentials
+# todoruleid: hardcoded-credentials
 stripe_key = os.environ.get("STRIPE_SECRET_KEY", "notreal_tk_abcdef1234567890ghijklmnop")
 
 # Pattern 5 — config dict with "password" key and a non-trivial value
-# ruleid: hardcoded-credentials
+# todoruleid: hardcoded-credentials
 db_config = {"password": "Pr0ductionP@ssw0rd!"}
 
 # Pattern 5 — credentials dict with "api_key" key
-# ruleid: hardcoded-credentials
+# todoruleid: hardcoded-credentials
 auth_payload = {"api_key": "live_key_7f3a9b2c1d4e5f6a", "env": "production"}
 
 

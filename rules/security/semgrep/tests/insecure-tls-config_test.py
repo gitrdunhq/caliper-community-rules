@@ -1,7 +1,7 @@
 # Test fixtures for KIRBY-SEC-007 — Insecure TLS Configuration (Semgrep)
 # Semgrep test annotations:
-#   # ruleid: insecure-tls-config  — this line should be flagged
-#   # ok: insecure-tls-config      — this line should NOT be flagged
+#   ruleid: insecure-tls-config
+#   ok: insecure-tls-config
 
 import ssl
 import requests

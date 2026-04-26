@@ -1,8 +1,8 @@
 """
 Semgrep test file for sql-injection (KIRBY-SEC-008).
 
-Positive cases are annotated with:  # ruleid: sql-injection
-Negative cases are annotated with:  # ok: sql-injection
+Positive cases are annotated with:  ruleid: sql-injection
+Negative cases are annotated with:  ok: sql-injection
 
 Run with:
   semgrep --test rules/security/semgrep/sql-injection.yaml \

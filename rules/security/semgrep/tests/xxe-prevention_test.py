@@ -1,8 +1,8 @@
 """
 Semgrep test file for xxe-prevention (KIRBY-SEC-015).
 
-Positive cases are annotated with:  # ruleid: xxe-prevention
-Negative cases are annotated with:  # ok: xxe-prevention
+Positive cases are annotated with:  ruleid: xxe-prevention
+Negative cases are annotated with:  ok: xxe-prevention
 
 Run with:
   semgrep --test rules/security/semgrep/xxe-prevention.yaml \

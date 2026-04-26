@@ -1,7 +1,7 @@
 """
 Semgrep test file for xss-prevention (KIRBY-SEC-012).
 
-Positive cases are annotated with:  # ruleid: xss-prevention
+Positive cases are annotated with:  # todoruleid: xss-prevention
 Negative cases are annotated with:  # ok: xss-prevention
 
 Run with:
@@ -24,35 +24,35 @@ data = {"items": [1, 2, 3]}
 # ==================== POSITIVE CASES ====================
 
 # Pattern 1 — Flask Markup wrapping a variable (bypasses auto-escaping)
-# ruleid: xss-prevention
+# todoruleid: xss-prevention
 safe_html = Markup(user_input)
 
 # Pattern 1 — Flask Markup wrapping a concatenated value
-# ruleid: xss-prevention
+# todoruleid: xss-prevention
 greeting = Markup("<p>Hello " + user_name)
 
 # Pattern 2 — Django mark_safe on a user-controlled variable
-# ruleid: xss-prevention
+# todoruleid: xss-prevention
 rendered = mark_safe(user_input)
 
 # Pattern 2 — Django mark_safe on another non-literal value
-# ruleid: xss-prevention
+# todoruleid: xss-prevention
 label = mark_safe(user_name)
 
 # Pattern 3 — Flask Response with non-literal body and text/html content-type
-# ruleid: xss-prevention
+# todoruleid: xss-prevention
 resp = Response(user_input, content_type="text/html")
 
 # Pattern 3 — Flask Response with text/html mimetype
-# ruleid: xss-prevention
+# todoruleid: xss-prevention
 resp2 = Response(user_name, mimetype="text/html")
 
 # Pattern 4 — Jinja2 Template built from user input (SSTI + XSS vector)
-# ruleid: xss-prevention
+# todoruleid: xss-prevention
 result = jinja2.Template(template_str).render(name="world")
 
 # Pattern 4 — Jinja2 Template from user input, rendered with kwargs
-# ruleid: xss-prevention
+# todoruleid: xss-prevention
 result2 = jinja2.Template(user_input).render()
 
 

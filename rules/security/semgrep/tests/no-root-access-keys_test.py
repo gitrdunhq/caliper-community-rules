@@ -66,21 +66,21 @@ sts.assume_role(RoleArn="arn:aws:iam::785375501972:root", RoleSessionName="bad")
 # PASS cases -- credentials from environment / config, not hardcoded
 # -------------------------------------------------------------------------
 
-# ok: no-root-access-keys -- no credentials supplied; boto3 uses default credential chain
+# ok: no-root-access-keys
 client_ok = boto3.client("iam", region_name="us-east-1")
 
-# ok: no-root-access-keys -- session without hardcoded keys; uses instance profile
+# ok: no-root-access-keys
 session_ok = boto3.Session(region_name="us-east-1")
 
-# ok: no-root-access-keys -- access key read from environment variable at runtime
+# ok: no-root-access-keys
 access_key_env = os.environ["AWS_ACCESS_KEY_ID"]
 client_env = boto3.client("iam", aws_access_key_id=access_key_env)
 
-# ok: no-root-access-keys -- key loaded from secrets manager, not a literal
+# ok: no-root-access-keys
 access_key_var = get_secret("aws/access-key-id")  # noqa: F821 (stub for test)
 client_secret = boto3.client("iam", aws_access_key_id=access_key_var)
 
-# ok: no-root-access-keys -- legitimate IAM role ARN (not root)
+# ok: no-root-access-keys
 sts.assume_role(
     RoleArn="arn:aws:iam::606824098034:role/DeployRole",
     RoleSessionName="deploy",

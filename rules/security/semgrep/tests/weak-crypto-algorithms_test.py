@@ -1,8 +1,8 @@
 """
 Semgrep test file for weak-crypto-algorithms (KIRBY-SEC-016).
 
-Positive cases are annotated with:  # ruleid: weak-crypto-algorithms
-Negative cases are annotated with:  # ok: weak-crypto-algorithms
+Positive cases are annotated with:  ruleid: weak-crypto-algorithms
+Negative cases are annotated with:  ok: weak-crypto-algorithms
 
 Run with:
   semgrep --test rules/security/semgrep/weak-crypto-algorithms.yaml \

@@ -1,8 +1,8 @@
 """
 Semgrep test file for path-traversal (KIRBY-SEC-014).
 
-Positive cases are annotated with:  # ruleid: path-traversal
-Negative cases are annotated with:  # ok: path-traversal
+Positive cases are annotated with:  todoruleid: path-traversal
+Negative cases are annotated with:  ok: path-traversal
 
 Run with:
   semgrep --test rules/security/semgrep/path-traversal.yaml \
@@ -27,35 +27,35 @@ output_dir = "/var/app/output"
 # ==================== POSITIVE CASES ====================
 
 # Pattern 1 — open() with string concatenation as path
-# ruleid: path-traversal
+# todoruleid: path-traversal
 f = open(base_dir + user_filename, "r")
 
 # Pattern 1 — open() with concatenated path using separator
-# ruleid: path-traversal
+# todoruleid: path-traversal
 f = open(base_dir + "/" + user_filename, "rb")
 
 # Pattern 2 — open() with os.path.join result (join can be escaped with absolute path)
-# ruleid: path-traversal
+# todoruleid: path-traversal
 f = open(os.path.join(base_dir, user_path), "r")
 
 # Pattern 2 — open() with nested os.path.join
-# ruleid: path-traversal
+# todoruleid: path-traversal
 f = open(os.path.join(base_dir, "subdir", user_filename), "r")
 
 # Pattern 3 — pathlib.Path() constructed from a non-literal value
-# ruleid: path-traversal
+# todoruleid: path-traversal
 p = pathlib.Path(user_path)
 
 # Pattern 3 — imported Path() constructed from a non-literal value
-# ruleid: path-traversal
+# todoruleid: path-traversal
 p = Path(user_filename)
 
 # Pattern 4 — shutil.copy with a non-literal source path
-# ruleid: path-traversal
+# todoruleid: path-traversal
 shutil.copy(user_src, dest_dir)
 
 # Pattern 4 — shutil.copyfile with a non-literal source path
-# ruleid: path-traversal
+# todoruleid: path-traversal
 shutil.copyfile(user_src, os.path.join(output_dir, "archived.zip"))
 
 

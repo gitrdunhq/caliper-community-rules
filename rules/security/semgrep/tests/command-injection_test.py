@@ -1,8 +1,8 @@
 """
 Semgrep test file for command-injection (KIRBY-SEC-009).
 
-Positive cases are annotated with:  # ruleid: command-injection
-Negative cases are annotated with:  # ok: command-injection
+Positive cases are annotated with:  ruleid: command-injection
+Negative cases are annotated with:  ok: command-injection
 
 Run with:
   semgrep --test rules/security/semgrep/command-injection.yaml \

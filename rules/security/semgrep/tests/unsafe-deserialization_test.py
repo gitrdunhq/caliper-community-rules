@@ -1,8 +1,8 @@
 """
 Semgrep test file for unsafe-deserialization (KIRBY-SEC-010).
 
-Positive cases are annotated with:  # ruleid: unsafe-deserialization
-Negative cases are annotated with:  # ok: unsafe-deserialization
+Positive cases are annotated with:  ruleid: unsafe-deserialization
+Negative cases are annotated with:  ok: unsafe-deserialization
 
 Run with:
   semgrep --test rules/security/semgrep/unsafe-deserialization.yaml \
@@ -27,8 +27,8 @@ shelf_path = "test_shelf"
 # These must each trigger the rule exactly once.
 
 # Pattern 1 — pickle.load from a file object
-# ruleid: unsafe-deserialization
 with open(file_path, "rb") as f:
+    # ruleid: unsafe-deserialization
     obj = pickle.load(f)
 
 # Pattern 2 — pickle.loads from raw bytes
@@ -44,8 +44,8 @@ data = yaml.load(yaml_string, Loader=yaml.FullLoader)
 data = yaml.load(yaml_string)
 
 # Pattern 5 — marshal.load from a file object
-# ruleid: unsafe-deserialization
 with open(file_path, "rb") as f:
+    # ruleid: unsafe-deserialization
     obj = marshal.load(f)
 
 # Pattern 6 — shelve.open (uses pickle internally for values)
