@@ -1,0 +1,242 @@
+# Kirby Compliance Catalog v1.0
+# Maps every rule in eedom-community-rules to canonical compliance control IDs.
+# This is the single source of truth for cross-framework compliance coverage.
+
+schema_version: "1.0"
+
+rules:
+
+  # ─── SECURITY ──────────────────────────────────────────────────────────
+
+  - kirby_id: KIRBY-SEC-001
+    name: unvalidated-path-construction
+    scanner: semgrep
+    severity: critical
+    targets: [python]
+    property_domain: integrity
+    compliance_mappings:
+      - framework: owasp-top10-2021
+        controls: ["A01:2021"]
+      - framework: owasp-asvs-v4.0
+        controls: ["V12.3.1"]
+      - framework: nist-800-53-r5
+        controls: ["SI-10"]
+      - framework: pci-dss-v4.0
+        controls: ["6.2.4"]
+      - framework: iso-27001-2022
+        controls: ["A.8.26"]
+
+  - kirby_id: KIRBY-SEC-002
+    name: subprocess-f-string-sql
+    scanner: semgrep
+    severity: high
+    targets: [python]
+    property_domain: integrity
+    compliance_mappings:
+      - framework: owasp-top10-2021
+        controls: ["A03:2021"]
+      - framework: owasp-asvs-v4.0
+        controls: ["V5.3.3"]
+      - framework: nist-800-53-r5
+        controls: ["SI-10"]
+      - framework: pci-dss-v4.0
+        controls: ["6.2.4"]
+      - framework: iso-27001-2022
+        controls: ["A.8.26"]
+
+  - kirby_id: KIRBY-SEC-003
+    name: missing-oserror-on-file-open
+    scanner: semgrep
+    severity: medium
+    targets: [python]
+    property_domain: availability
+    compliance_mappings:
+      - framework: nist-800-53-r5
+        controls: ["SI-11"]
+      - framework: iso-27001-2022
+        controls: ["A.8.28"]
+
+  - kirby_id: KIRBY-SEC-004
+    name: verify-gate-fails-open
+    scanner: semgrep
+    severity: high
+    targets: [bash]
+    property_domain: integrity
+    compliance_mappings:
+      - framework: nist-800-53-r5
+        controls: ["CM-6", "SA-11"]
+      - framework: iso-27001-2022
+        controls: ["A.8.25"]
+      - framework: soc2-tsc
+        controls: ["CC8.1"]
+
+  # ─── INFRASTRUCTURE ────────────────────────────────────────────────────
+
+  - kirby_id: KIRBY-INF-001
+    name: s3-versioning
+    scanner: tfsec
+    severity: high
+    targets: [terraform]
+    property_domain: availability
+    compliance_mappings:
+      - framework: nist-800-53-r5
+        controls: ["CP-9", "CP-10"]
+      - framework: soc2-tsc
+        controls: ["A1.2"]
+      - framework: aws-config
+        controls: ["S3_BUCKET_VERSIONING_ENABLED"]
+
+  - kirby_id: KIRBY-INF-002
+    name: rds-backup-retention
+    scanner: tfsec
+    severity: high
+    targets: [terraform]
+    property_domain: availability
+    compliance_mappings:
+      - framework: nist-800-53-r5
+        controls: ["CP-9"]
+      - framework: soc2-tsc
+        controls: ["A1.2"]
+      - framework: pci-dss-v4.0
+        controls: ["12.10.1"]
+      - framework: hipaa-security
+        controls: ["164.308(a)(7)(ii)(A)"]
+      - framework: aws-config
+        controls: ["DB_INSTANCE_BACKUP_ENABLED"]
+
+  - kirby_id: KIRBY-INF-003
+    name: cloudwatch-log-retention
+    scanner: tfsec
+    severity: medium
+    targets: [terraform]
+    property_domain: availability
+    compliance_mappings:
+      - framework: nist-800-53-r5
+        controls: ["AU-11"]
+      - framework: soc2-tsc
+        controls: ["CC7.2"]
+      - framework: pci-dss-v4.0
+        controls: ["10.5.1"]
+
+  - kirby_id: KIRBY-INF-004
+    name: iam-wildcard-resource
+    scanner: cfn-nag
+    severity: critical
+    targets: [cloudformation]
+    property_domain: confidentiality
+    compliance_mappings:
+      - framework: nist-800-53-r5
+        controls: ["AC-6(1)"]
+      - framework: cis-aws-v2.0
+        controls: ["1.16"]
+      - framework: owasp-asvs-v4.0
+        controls: ["V4.1.1"]
+      - framework: soc2-tsc
+        controls: ["CC6.1"]
+      - framework: pci-dss-v4.0
+        controls: ["7.1.1"]
+      - framework: iso-27001-2022
+        controls: ["A.5.15"]
+      - framework: aws-config
+        controls: ["IAM_POLICY_NO_STATEMENTS_WITH_ADMIN_ACCESS"]
+
+  - kirby_id: KIRBY-INF-005
+    name: s3-public-access-block
+    scanner: cfn-nag
+    severity: critical
+    targets: [cloudformation]
+    property_domain: confidentiality
+    compliance_mappings:
+      - framework: nist-800-53-r5
+        controls: ["AC-3", "AC-6"]
+      - framework: cis-aws-v2.0
+        controls: ["2.1.2", "2.1.4"]
+      - framework: soc2-tsc
+        controls: ["CC6.1", "CC6.6"]
+      - framework: pci-dss-v4.0
+        controls: ["1.2.1"]
+      - framework: iso-27001-2022
+        controls: ["A.8.3"]
+      - framework: aws-config
+        controls: ["S3_BUCKET_PUBLIC_READ_PROHIBITED", "S3_ACCOUNT_LEVEL_PUBLIC_ACCESS_BLOCKS"]
+
+  - kirby_id: KIRBY-INF-006
+    name: rds-storage-encrypted
+    scanner: cfn-nag
+    severity: high
+    targets: [cloudformation]
+    property_domain: confidentiality
+    compliance_mappings:
+      - framework: nist-800-53-r5
+        controls: ["SC-28"]
+      - framework: cis-aws-v2.0
+        controls: ["2.3.1"]
+      - framework: soc2-tsc
+        controls: ["CC6.1"]
+      - framework: pci-dss-v4.0
+        controls: ["3.5.1"]
+      - framework: hipaa-security
+        controls: ["164.312(a)(2)(iv)"]
+      - framework: iso-27001-2022
+        controls: ["A.8.24"]
+      - framework: aws-config
+        controls: ["RDS_STORAGE_ENCRYPTED"]
+
+  - kirby_id: KIRBY-INF-007
+    name: sbom-from-environment
+    scanner: semgrep
+    severity: high
+    targets: [bash]
+    property_domain: integrity
+    compliance_mappings:
+      - framework: nist-800-53-r5
+        controls: ["SA-12", "SR-4"]
+      - framework: pci-dss-v4.0
+        controls: ["6.3.1"]
+      - framework: iso-27001-2022
+        controls: ["A.8.8"]
+
+  # ─── CODE QUALITY ──────────────────────────────────────────────────────
+
+  - kirby_id: KIRBY-QUA-001
+    name: git-head-tilde-without-fallback
+    scanner: semgrep
+    severity: medium
+    targets: [python]
+    property_domain: availability
+    compliance_mappings: []
+
+  - kirby_id: KIRBY-QUA-002
+    name: substring-match-without-word-boundary
+    scanner: semgrep
+    severity: low
+    targets: [python]
+    property_domain: determinism
+    compliance_mappings: []
+
+  # ─── STANDARDS ─────────────────────────────────────────────────────────
+
+  - kirby_id: KIRBY-STD-001
+    name: event-type-string-consistency
+    scanner: semgrep
+    severity: low
+    targets: [python]
+    property_domain: determinism
+    compliance_mappings: []
+
+# ─── COVERAGE SUMMARY ─────────────────────────────────────────────────────
+#
+# Framework          | Rules mapped | Coverage
+# -------------------|-------------|----------
+# NIST 800-53 r5     | 10/11       | 91%
+# CIS AWS v2.0       | 3/11        | 27%
+# OWASP Top 10 2021  | 3/11        | 27%
+# OWASP ASVS v4.0    | 3/11        | 27%
+# PCI-DSS v4.0       | 6/11        | 55%
+# HIPAA Security     | 2/11        | 18%
+# ISO 27001:2022     | 7/11        | 64%
+# SOC2 TSC           | 5/11        | 45%
+# AWS Config         | 5/11        | 45%
+#
+# 3 rules (QUA-001, QUA-002, STD-001) are code quality/standards
+# with no compliance framework mapping — that's correct.
