@@ -19,8 +19,8 @@ class RdsUnencryptedRule < BaseRule
   }.freeze
 
   def rule_text
-    'RDS instance should have StorageEncrypted enabled (instances restored from ' \\
-    'encrypted snapshots, read replicas of encrypted primaries, and Aurora cluster ' \\
+    'RDS instance should have StorageEncrypted enabled (instances restored from ' \
+    'encrypted snapshots, read replicas of encrypted primaries, and Aurora cluster ' \
     'members inherit encryption and are exempt)'
   end
 
