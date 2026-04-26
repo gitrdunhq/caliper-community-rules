@@ -1,0 +1,25 @@
+# KIRBY-INF-013 — PASS case
+# Compliant: runAsNonRoot is explicitly set to true at both pod and container level.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: no-root-pass
+  labels:
+    app: no-root-pass
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: no-root-pass
+  template:
+    metadata:
+      labels:
+        app: no-root-pass
+    spec:
+      securityContext:
+        runAsNonRoot: true
+      containers:
+        - name: app
+          image: nginx:1.25
+          securityContext:
+            runAsNonRoot: true

@@ -1,0 +1,51 @@
+# Kirby kube-linter checks
+# Run standalone: kube-linter lint <path> --config checks.yaml
+#
+# The _kirby key inside each customCheck is eedom metadata.
+# kube-linter ignores unknown YAML fields during unmarshaling,
+# so this is transparent to the scanner but parseable by eedom.
+
+checks:
+  # Disable built-in checks in this config so only Kirby custom checks
+  # run when eedom invokes kube-linter with this file. Set addAllBuiltIn: true
+  # in your .eedom/kube-linter.config.yaml if you want built-in + Kirby checks.
+  addAllBuiltIn: false
+
+customChecks:
+  - name: no-run-as-root
+    _kirby:
+      kirby_id: KIRBY-INF-013
+      severity: HIGH
+      property_domain: confidentiality
+      compliance_mappings:
+        - framework: cis-k8s-v1.7
+          controls: ["5.2.6"]
+        - framework: nist-800-53-r5
+          controls: ["AC-6"]
+        - framework: pci-dss-v4.0
+          controls: ["7.1.1"]
+        - framework: iso-27001-2022
+          controls: ["A.5.15"]
+    description: "Containers must not run as root user. Running as root grants full host UID 0 privileges if the container escapes its isolation boundary."
+    template: run-as-non-root
+    params: {}
+    remediation: "Set spec.securityContext.runAsNonRoot: true at the pod level, or spec.containers[].securityContext.runAsNonRoot: true at the container level."
+
+  - name: no-privileged-containers
+    _kirby:
+      kirby_id: KIRBY-INF-014
+      severity: HIGH
+      property_domain: confidentiality
+      compliance_mappings:
+        - framework: cis-k8s-v1.7
+          controls: ["5.2.1"]
+        - framework: nist-800-53-r5
+          controls: ["AC-6"]
+        - framework: pci-dss-v4.0
+          controls: ["7.1.1"]
+        - framework: iso-27001-2022
+          controls: ["A.5.15"]
+    description: "Containers must not run in privileged mode. Privileged containers have full access to all Linux kernel capabilities and devices, equivalent to root on the host."
+    template: no-privileged-containers
+    params: {}
+    remediation: "Remove securityContext.privileged from the container spec, or explicitly set it to false."

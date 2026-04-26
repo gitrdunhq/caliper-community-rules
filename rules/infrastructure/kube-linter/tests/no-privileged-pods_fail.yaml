@@ -1,0 +1,26 @@
+# KIRBY-INF-014 — FAIL case
+# Non-compliant: privileged is set to true.
+# kube-linter no-privileged-containers check should flag this deployment.
+# A privileged container has full access to all Linux kernel capabilities
+# and host devices — equivalent to root on the node.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: no-privileged-fail
+  labels:
+    app: no-privileged-fail
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: no-privileged-fail
+  template:
+    metadata:
+      labels:
+        app: no-privileged-fail
+    spec:
+      containers:
+        - name: app
+          image: nginx:1.25
+          securityContext:
+            privileged: true

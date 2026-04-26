@@ -1,0 +1,24 @@
+# KIRBY-INF-014 — PASS case
+# Compliant: privileged is explicitly set to false.
+# kube-linter no-privileged-containers check should not flag this deployment.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: no-privileged-pass
+  labels:
+    app: no-privileged-pass
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: no-privileged-pass
+  template:
+    metadata:
+      labels:
+        app: no-privileged-pass
+    spec:
+      containers:
+        - name: app
+          image: nginx:1.25
+          securityContext:
+            privileged: false
