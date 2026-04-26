@@ -1,0 +1,75 @@
+{
+  "_kirby": {
+    "kirby_id": "KIRBY-SEC-007",
+    "property_domain": "confidentiality",
+    "compliance_mappings": [
+      {"framework": "owasp-top10-2021", "controls": ["A02:2021"]},
+      {"framework": "owasp-asvs-v4.0", "controls": ["V9.1.1"]},
+      {"framework": "nist-800-53-r5", "controls": ["SC-8", "SC-8(1)"]},
+      {"framework": "soc2-tsc", "controls": ["CC6.1"]},
+      {"framework": "pci-dss-v4.0", "controls": ["4.2.1"]},
+      {"framework": "hipaa-security", "controls": ["164.312(e)(1)"]},
+      {"framework": "iso-27001-2022", "controls": ["A.8.24"]}
+    ]
+  },
+  "checks": [
+    {
+      "code": "EEDOM-AWS-012",
+      "description": "ALB/NLB listeners must use HTTPS or TLS protocol to encrypt traffic in transit",
+      "impact": "HTTP listeners transmit data in plaintext, exposing sensitive traffic to interception on the network path",
+      "resolution": "Set protocol = \"HTTPS\" (ALB) or protocol = \"TLS\" (NLB) on aws_lb_listener resources. Redirect-only HTTP listeners (action_type = redirect with redirect.protocol = HTTPS) are architecturally acceptable but are still flagged by this check due to tfsec's attribute-level evaluation — suppress with # tfsec-ignore:EEDOM-AWS-012 and a comment explaining the redirect intent",
+      "requiredTypes": [
+        "resource"
+      ],
+      "requiredLabels": [
+        "aws_lb_listener"
+      ],
+      "severity": "HIGH",
+      "matchSpec": {
+        "action": "or",
+        "predicateMatchSpec": [
+          {
+            "name": "protocol",
+            "action": "equals",
+            "value": "HTTPS"
+          },
+          {
+            "name": "protocol",
+            "action": "equals",
+            "value": "TLS"
+          }
+        ]
+      },
+      "errorMessage": "aws_lb_listener does not use HTTPS or TLS protocol — plaintext HTTP exposes traffic in transit (set protocol = HTTPS or TLS; use # tfsec-ignore:EEDOM-AWS-012 for HTTP-to-HTTPS redirect-only listeners)"
+    },
+    {
+      "code": "EEDOM-AWS-012",
+      "description": "ALB/NLB listeners must use HTTPS or TLS protocol to encrypt traffic in transit",
+      "impact": "HTTP listeners transmit data in plaintext, exposing sensitive traffic to interception on the network path",
+      "resolution": "Set protocol = \"HTTPS\" (ALB) or protocol = \"TLS\" (NLB) on aws_alb_listener resources. aws_alb_listener is an alias for aws_lb_listener — the same rules apply. Redirect-only HTTP listeners may suppress this check with # tfsec-ignore:EEDOM-AWS-012",
+      "requiredTypes": [
+        "resource"
+      ],
+      "requiredLabels": [
+        "aws_alb_listener"
+      ],
+      "severity": "HIGH",
+      "matchSpec": {
+        "action": "or",
+        "predicateMatchSpec": [
+          {
+            "name": "protocol",
+            "action": "equals",
+            "value": "HTTPS"
+          },
+          {
+            "name": "protocol",
+            "action": "equals",
+            "value": "TLS"
+          }
+        ]
+      },
+      "errorMessage": "aws_alb_listener does not use HTTPS or TLS protocol — plaintext HTTP exposes traffic in transit (set protocol = HTTPS or TLS; use # tfsec-ignore:EEDOM-AWS-012 for HTTP-to-HTTPS redirect-only listeners)"
+    }
+  ]
+}
