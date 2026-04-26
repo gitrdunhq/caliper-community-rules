@@ -57,7 +57,7 @@ Rationale: A HIGH-severity finding with HIGH confidence is a confirmed dangerous
 |-------|------|-----------------|
 | B110 | `try_except_pass` | `except: pass` blocks that silently swallow all errors |
 
-### Cryptography & deserialization (B301-B311)
+### Cryptography & deserialization (B301-B506)
 
 | Check | Name | What it catches |
 |-------|------|-----------------|
@@ -67,9 +67,10 @@ Rationale: A HIGH-severity finding with HIGH confidence is a confirmed dangerous
 | B304 | `des` | DES/3DES encryption -- broken cipher |
 | B305 | `cipher` | Insecure cipher modes (ECB, etc.) |
 | B306 | `mktemp_q` | `tempfile.mktemp()` -- race condition, use `mkstemp()` instead |
-| B309 | `httpsconnection` | HTTP connections without TLS verification |
+| B307 | `eval` | `eval()` -- arbitrary code execution, same risk class as `exec()` |
 | B310 | `urllib_urlopen` | `urllib.urlopen()` with unvalidated URLs |
 | B311 | `random` | `random` module for security-sensitive operations (use `secrets`) |
+| B506 | `yaml_load` | `yaml.load()` without SafeLoader -- arbitrary code execution |
 
 ### Shell injection (B601-B608)
 

@@ -51,7 +51,7 @@ skips: []
 # Additional arguments passed directly to the bandit CLI.
 # --format json : structured output for eedom parsing
 # -ll           : only report MEDIUM severity and above (reduces noise)
-extra_args: ["--format", "json", "-ll"]
+extra_args: ["--format", "json"]
 
 # Path to the curated Bandit profile (relative to this config).
 # If set, bandit runs with -c <profile_path>.

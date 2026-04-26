@@ -91,7 +91,7 @@ except Exception:
 # SAFE: catch specific exception, log or handle meaningfully
 try:
     os.remove("lockfile")
-except FileNotFoundError:
+except FileNotFoundError:  # NOTE: B110 may trigger here if check_typed_exception is enabled
     pass  # file already gone -- expected, not an error
 
 
@@ -128,7 +128,7 @@ user_cmd = "ls -la"
 subprocess.call(user_cmd, shell=True)  # noqa: B602
 
 # SAFE: list form bypasses the shell entirely
-subprocess.call(["ls", "-la"])
+subprocess.run(["ls", "-la"], check=True)
 
 
 # =============================================================================
