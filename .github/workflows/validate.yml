@@ -1,0 +1,196 @@
+name: Validate Rules
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  validate:
+    name: Validate
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Validate YAML syntax
+        run: |
+          pip install pyyaml
+          python3 -c "
+          import yaml, glob, sys
+          errors = []
+          for pattern in ['rules/**/*.yaml', '*.yaml']:
+              for f in glob.glob(pattern, recursive=True):
+                  try:
+                      with open(f) as fh:
+                          yaml.safe_load(fh)
+                  except yaml.YAMLError as e:
+                      errors.append(f'{f}: {e}')
+          if errors:
+              for e in errors:
+                  print(f'ERROR: {e}', file=sys.stderr)
+              sys.exit(1)
+          print(f'All YAML files valid')
+          "
+
+      - name: Validate JSON syntax
+        run: |
+          python3 -c "
+          import json, glob, sys
+          errors = []
+          for f in glob.glob('rules/**/*.json', recursive=True):
+              try:
+                  with open(f) as fh:
+                      json.load(fh)
+              except json.JSONDecodeError as e:
+                  errors.append(f'{f}: {e}')
+          if errors:
+              for e in errors:
+                  print(f'ERROR: {e}', file=sys.stderr)
+              sys.exit(1)
+          print(f'All JSON files valid')
+          "
+
+      - name: Validate Ruby syntax
+        run: |
+          for f in $(find rules -name '*.rb' 2>/dev/null); do
+            ruby -c "$f" || exit 1
+          done
+          echo "All Ruby files valid"
+
+      - name: Check Kirby metadata
+        run: |
+          python3 -c "
+          import yaml, json, glob, sys, re
+          errors = []
+
+          # Check Semgrep rules have required metadata (including dockerfile-semgrep)
+          for pattern in ['rules/**/semgrep/*.yaml', 'rules/**/dockerfile-semgrep/*.yaml']:
+            for f in glob.glob(pattern, recursive=True):
+              if '/tests/' in f or f.endswith('_test.yaml'):
+                  continue
+              with open(f) as fh:
+                  data = yaml.safe_load(fh)
+              if not data or 'rules' not in data:
+                  continue
+              for rule in data['rules']:
+                  meta = rule.get('metadata', {})
+                  rule_id = rule.get('id', 'unknown')
+                  if 'kirby_id' not in meta:
+                      errors.append(f'{f}: rule \"{rule_id}\" missing kirby_id')
+                  elif not re.match(r'^KIRBY-(SEC|INF|SCM|QUA|STD)-\d{3}$', meta['kirby_id']):
+                      errors.append(f'{f}: rule \"{rule_id}\" has invalid kirby_id format: {meta[\"kirby_id\"]}')
+                  if 'category' not in meta:
+                      errors.append(f'{f}: rule \"{rule_id}\" missing category')
+                  if 'eedom-plugin' not in meta:
+                      errors.append(f'{f}: rule \"{rule_id}\" missing eedom-plugin')
+                  if 'compliance_mappings' not in meta:
+                      errors.append(f'{f}: rule \"{rule_id}\" missing compliance_mappings')
+                  if 'property-domain' not in meta:
+                      errors.append(f'{f}: rule \"{rule_id}\" missing property-domain')
+
+          # Check tfsec checks have required _kirby block
+          for f in glob.glob('rules/**/tfsec/*_tfchecks.json', recursive=True):
+              with open(f) as fh:
+                  data = json.load(fh)
+              if '_kirby' not in data:
+                  errors.append(f'{f}: missing _kirby block')
+              else:
+                  kirby = data['_kirby']
+                  if 'kirby_id' not in kirby:
+                      errors.append(f'{f}: _kirby missing kirby_id')
+                  if 'compliance_mappings' not in kirby:
+                      errors.append(f'{f}: _kirby missing compliance_mappings')
+
+          if errors:
+              for e in errors:
+                  print(f'ERROR: {e}', file=sys.stderr)
+              sys.exit(1)
+          print('All rules have required Kirby metadata')
+          "
+
+      - name: Check test fixtures exist
+        run: |
+          python3 -c "
+          import yaml, glob, sys, os
+          warnings = []
+
+          # Semgrep rules should have test files
+          for f in glob.glob('rules/**/semgrep/*.yaml', recursive=True):
+              if '/tests/' in f or '/dockerfile-semgrep/' in f:
+                  continue
+              dirname = os.path.dirname(f)
+              basename = os.path.splitext(os.path.basename(f))[0]
+              test_dir = os.path.join(dirname, 'tests')
+              if not os.path.isdir(test_dir):
+                  warnings.append(f'{f}: no tests/ directory')
+                  continue
+              test_files = glob.glob(os.path.join(test_dir, f'{basename}_test.*'))
+              if not test_files:
+                  warnings.append(f'{f}: no test fixture found (expected tests/{basename}_test.*)')
+
+          # Dockerfile-semgrep rules should have test files
+          for f in glob.glob('rules/**/dockerfile-semgrep/*.yaml', recursive=True):
+              dirname = os.path.dirname(f)
+              basename = os.path.splitext(os.path.basename(f))[0]
+              test_dir = os.path.join(dirname, 'tests')
+              if not os.path.isdir(test_dir):
+                  warnings.append(f'{f}: no tests/ directory')
+                  continue
+              test_files = glob.glob(os.path.join(test_dir, f'{basename}_test.*'))
+              if not test_files:
+                  warnings.append(f'{f}: no test fixture found (expected tests/{basename}_test.*)')
+
+          # tfsec checks should have test .tf files
+          for f in glob.glob('rules/**/tfsec/*_tfchecks.json', recursive=True):
+              dirname = os.path.dirname(f)
+              basename = os.path.splitext(os.path.basename(f))[0].replace('_tfchecks', '')
+              test_dir = os.path.join(dirname, 'tests')
+              if not os.path.isdir(test_dir):
+                  warnings.append(f'{f}: no tests/ directory')
+                  continue
+              test_files = glob.glob(os.path.join(test_dir, f'{basename}_test.*'))
+              if not test_files:
+                  warnings.append(f'{f}: no test fixture found (expected tests/{basename}_test.*)')
+
+          if warnings:
+              print('Missing test fixtures (warnings):')
+              for w in warnings:
+                  print(f'  WARN: {w}')
+              # Don't fail — warn only for now
+          else:
+              print('All rules have test fixtures')
+          "
+
+      - name: Install Semgrep
+        run: pip install semgrep
+
+      - name: Run Semgrep tests
+        run: |
+          FAILED=0
+          for rule in $(find rules -path '*/semgrep/*.yaml' -not -path '*/tests/*' -not -path '*/kube-linter/*'); do
+            TESTS_DIR="$(dirname "$rule")/tests"
+            RULE_BASE="$(basename "$rule" .yaml)"
+            if [ -d "$TESTS_DIR" ]; then
+              for test_file in "$TESTS_DIR/${RULE_BASE}_test".*; do
+                [ -f "$test_file" ] || continue
+                echo "Testing: $rule against $test_file"
+                if ! semgrep --test --config "$rule" "$test_file" 2>/dev/null; then
+                  echo "FAIL: $rule"
+                  FAILED=$((FAILED + 1))
+                fi
+              done
+            fi
+          done
+          if [ "$FAILED" -gt 0 ]; then
+            echo "$FAILED rule(s) failed Semgrep tests"
+            exit 1
+          fi
+          echo "All Semgrep rule tests passed"
