@@ -1,0 +1,25 @@
+# KIRBY-INF-019 — FAIL case
+# Non-compliant: no resources.limits set at all.
+# kube-linter unset-cpu-requirements and unset-memory-requirements checks should flag this deployment.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: resource-limits-fail
+  namespace: production
+  labels:
+    app: resource-limits-fail
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: resource-limits-fail
+  template:
+    metadata:
+      labels:
+        app: resource-limits-fail
+    spec:
+      containers:
+        - name: app
+          image: nginx:1.25
+          # No resources block — CPU and memory limits are unset.
+          # This container can consume unbounded CPU and memory on the node.

@@ -1,0 +1,30 @@
+{
+  "_kirby": {
+    "kirby_id": "KIRBY-INF-027",
+    "property_domain": "availability",
+    "compliance_mappings": [
+      {"framework": "nist-800-53-r5", "controls": ["AU-2"]},
+      {"framework": "soc2-tsc", "controls": ["CC7.2"]}
+    ]
+  },
+  "checks": [
+    {
+      "code": "EEDOM-AWS-015",
+      "description": "Lambda functions must configure a dead-letter queue (DLQ) to capture failed asynchronous invocations",
+      "impact": "Without a DLQ, failed async Lambda invocations are silently dropped after AWS retries. Events are permanently lost with no visibility, violating audit requirements and breaking downstream event-driven workflows",
+      "resolution": "Add a dead_letter_config block to the aws_lambda_function resource with target_arn pointing to an SQS queue or SNS topic",
+      "requiredTypes": [
+        "resource"
+      ],
+      "requiredLabels": [
+        "aws_lambda_function"
+      ],
+      "severity": "MEDIUM",
+      "matchSpec": {
+        "name": "dead_letter_config",
+        "action": "isPresent"
+      },
+      "errorMessage": "Lambda function does not have a dead_letter_config block — failed async invocations will be silently dropped"
+    }
+  ]
+}

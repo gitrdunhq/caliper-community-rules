@@ -1,0 +1,26 @@
+# KIRBY-INF-017 — PASS case
+# Compliant: workload is deployed to a dedicated non-default namespace.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ns-pass
+  namespace: production
+  labels:
+    app: ns-pass
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ns-pass
+  template:
+    metadata:
+      labels:
+        app: ns-pass
+    spec:
+      securityContext:
+        runAsNonRoot: true
+      containers:
+        - name: app
+          image: nginx:1.25
+          securityContext:
+            runAsNonRoot: true

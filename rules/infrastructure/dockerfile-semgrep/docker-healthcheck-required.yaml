@@ -1,0 +1,32 @@
+rules:
+  - id: docker-healthcheck-required
+    patterns:
+      # Flag CMD or ENTRYPOINT that is not preceded by a HEALTHCHECK directive.
+      - pattern-either:
+          - pattern: CMD ...
+          - pattern: ENTRYPOINT ...
+      - pattern-not-inside: |
+          HEALTHCHECK ...
+          ...
+    message: >
+      Dockerfile does not define a HEALTHCHECK instruction. Without a health
+      check, the container orchestrator cannot detect and replace unhealthy
+      containers. Add 'HEALTHCHECK CMD curl -f http://localhost/ || exit 1'
+      or equivalent.
+    languages: [dockerfile]
+    severity: WARNING
+    metadata:
+      kirby_id: KIRBY-INF-022
+      category: infrastructure
+      subcategory: dockerfile-best-practices
+      property-domain: availability
+      eedom-plugin: semgrep
+      compliance_mappings:
+        - framework: cis-docker-v1.6
+          controls: ["4.6"]
+        - framework: nist-800-53-r5
+          controls: ["SC-6"]
+      references:
+        - https://docs.docker.com/reference/dockerfile/#healthcheck
+        - https://www.cisecurity.org/benchmark/docker
+        - https://github.com/gitrdunhq/eedom-community-rules

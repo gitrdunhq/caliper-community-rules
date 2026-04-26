@@ -49,3 +49,78 @@ customChecks:
     template: no-privileged-containers
     params: {}
     remediation: "Remove securityContext.privileged from the container spec, or explicitly set it to false."
+
+  - name: drop-all-capabilities
+    _kirby:
+      kirby_id: KIRBY-INF-016
+      severity: MEDIUM
+      property_domain: confidentiality
+      compliance_mappings:
+        - framework: cis-k8s-v1.7
+          controls: ["5.2.7"]
+        - framework: nist-800-53-r5
+          controls: ["AC-6"]
+    description: "Containers must drop ALL Linux capabilities. Retaining any capability (e.g. NET_RAW, SYS_ADMIN) increases the blast radius of a container escape. securityContext.capabilities.drop must include ALL."
+    template: drop-net-raw-capability
+    params: {}
+    remediation: "Add securityContext.capabilities.drop: [\"ALL\"] to each container spec. If specific capabilities are needed, add only those back under securityContext.capabilities.add after dropping ALL."
+
+  - name: no-default-namespace
+    _kirby:
+      kirby_id: KIRBY-INF-017
+      severity: MEDIUM
+      property_domain: isolation
+      compliance_mappings:
+        - framework: cis-k8s-v1.7
+          controls: ["5.7.4"]
+        - framework: nist-800-53-r5
+          controls: ["AC-6"]
+    description: "Workloads must not be deployed to the default namespace. The default namespace provides no isolation boundary and is a common target for lateral movement. All production workloads require a dedicated namespace."
+    template: default-namespace
+    params: {}
+    remediation: "Set metadata.namespace to a non-default namespace in your manifest, or specify --namespace in your kubectl apply command."
+
+  - name: read-only-root-filesystem
+    _kirby:
+      kirby_id: KIRBY-INF-018
+      severity: MEDIUM
+      property_domain: integrity
+      compliance_mappings:
+        - framework: cis-k8s-v1.7
+          controls: ["5.2.4"]
+        - framework: nist-800-53-r5
+          controls: ["AC-6"]
+    description: "Containers must use a read-only root filesystem. A writable root filesystem allows an attacker to modify binaries, install tools, or persist payloads after a container compromise."
+    template: read-only-root-fs
+    params: {}
+    remediation: "Set securityContext.readOnlyRootFilesystem: true on each container. Mount writable paths explicitly using emptyDir or PVC volumes for any directories that legitimately need write access (e.g. /tmp, /var/run)."
+
+  - name: cpu-limits-required
+    _kirby:
+      kirby_id: KIRBY-INF-019
+      severity: MEDIUM
+      property_domain: boundedness
+      compliance_mappings:
+        - framework: cis-k8s-v1.7
+          controls: ["5.4.1"]
+        - framework: nist-800-53-r5
+          controls: ["SC-6"]
+    description: "Containers must declare CPU limits. Without CPU limits a single runaway container can starve co-located workloads, causing cascading failures across the node."
+    template: unset-cpu-requirements
+    params: {}
+    remediation: "Set resources.limits.cpu on each container. Choose a limit that reflects the expected steady-state usage with headroom for bursts (e.g. 500m for a service that averages 100m)."
+
+  - name: memory-limits-required
+    _kirby:
+      kirby_id: KIRBY-INF-019
+      severity: MEDIUM
+      property_domain: boundedness
+      compliance_mappings:
+        - framework: cis-k8s-v1.7
+          controls: ["5.4.1"]
+        - framework: nist-800-53-r5
+          controls: ["SC-6"]
+    description: "Containers must declare memory limits. Without memory limits an OOM event in one container can trigger node-level OOM kills affecting unrelated workloads."
+    template: unset-memory-requirements
+    params: {}
+    remediation: "Set resources.limits.memory on each container. Start with 2x the observed steady-state usage and tune down after profiling."

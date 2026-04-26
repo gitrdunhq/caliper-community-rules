@@ -1,0 +1,32 @@
+{
+  "_kirby": {
+    "kirby_id": "KIRBY-INF-023",
+    "property_domain": "confidentiality",
+    "compliance_mappings": [
+      {"framework": "cis-azure-v2.0", "controls": ["3.1"]},
+      {"framework": "nist-800-53-r5", "controls": ["AC-6"]},
+      {"framework": "soc2-tsc", "controls": ["CC6.1"]}
+    ]
+  },
+  "checks": [
+    {
+      "code": "EEDOM-AZ-001",
+      "description": "Azure Storage accounts must disable anonymous public blob access",
+      "impact": "Enabling public blob access exposes storage container contents to the internet without authentication, risking data exfiltration",
+      "resolution": "Set allow_nested_items_to_be_public = false on the azurerm_storage_account resource (AzureRM provider v3+). For older providers use allow_blob_public_access = false",
+      "requiredTypes": [
+        "resource"
+      ],
+      "requiredLabels": [
+        "azurerm_storage_account"
+      ],
+      "severity": "HIGH",
+      "matchSpec": {
+        "name": "allow_nested_items_to_be_public",
+        "action": "equals",
+        "value": false
+      },
+      "errorMessage": "Azure Storage account has public blob access enabled (allow_nested_items_to_be_public must be false)"
+    }
+  ]
+}

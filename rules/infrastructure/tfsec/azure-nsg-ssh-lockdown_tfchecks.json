@@ -1,0 +1,32 @@
+{
+  "_kirby": {
+    "kirby_id": "KIRBY-INF-024",
+    "property_domain": "confidentiality",
+    "compliance_mappings": [
+      {"framework": "cis-azure-v2.0", "controls": ["6.2"]},
+      {"framework": "nist-800-53-r5", "controls": ["AC-6"]},
+      {"framework": "soc2-tsc", "controls": ["CC6.1"]}
+    ]
+  },
+  "checks": [
+    {
+      "code": "EEDOM-AZ-002",
+      "description": "Azure Network Security Group rules must not allow unrestricted inbound access from any source (0.0.0.0/0 or *)",
+      "impact": "Allowing unrestricted inbound access exposes resources such as SSH (port 22) and RDP (port 3389) to brute-force and exploitation from the entire internet",
+      "resolution": "Set source_address_prefix to a specific IP range or service tag instead of '*' or 'Internet' on all Allow inbound azurerm_network_security_rule resources",
+      "requiredTypes": [
+        "resource"
+      ],
+      "requiredLabels": [
+        "azurerm_network_security_rule"
+      ],
+      "severity": "HIGH",
+      "matchSpec": {
+        "name": "source_address_prefix",
+        "action": "notEqual",
+        "value": "*"
+      },
+      "errorMessage": "Azure NSG rule allows inbound traffic from any source (source_address_prefix must not be '*')"
+    }
+  ]
+}
