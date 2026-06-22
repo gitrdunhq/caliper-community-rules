@@ -13,7 +13,7 @@
   },
   "checks": [
     {
-      "code": "EEDOM-AWS-004",
+      "code": "CALIPER-AWS-004",
       "description": "S3 buckets must have all four public access block settings enabled. An aws_s3_bucket_public_access_block resource is required with block_public_acls, block_public_policy, ignore_public_acls, and restrict_public_buckets all set to true.",
       "impact": "Partially or fully disabled public access block settings allow S3 bucket ACLs or bucket policies to expose objects to the internet, leading to data leakage or exfiltration",
       "resolution": "Create an aws_s3_bucket_public_access_block resource and set block_public_acls = true, block_public_policy = true, ignore_public_acls = true, and restrict_public_buckets = true",

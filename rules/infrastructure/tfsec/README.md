@@ -2,7 +2,7 @@
 
 tfsec is a static analysis security scanner for Terraform code. It detects misconfigurations across AWS, Azure, GCP, and other providers — unencrypted storage, overly permissive IAM, missing logging, public-facing resources, and more.
 
-tfsec has been absorbed into [Trivy](https://github.com/aquasecurity/trivy) as the Terraform misconfiguration scanner. eedom supports both: **tfsec** for standalone Terraform scanning, **Trivy** for broader infrastructure scanning that includes container images and filesystems alongside IaC.
+tfsec has been absorbed into [Trivy](https://github.com/aquasecurity/trivy) as the Terraform misconfiguration scanner. caliper supports both: **tfsec** for standalone Terraform scanning, **Trivy** for broader infrastructure scanning that includes container images and filesystems alongside IaC.
 
 ## What tfsec catches
 
@@ -13,9 +13,9 @@ tfsec has been absorbed into [Trivy](https://github.com/aquasecurity/trivy) as t
 
 350+ built-in rules across all major cloud providers.
 
-## How eedom integrates tfsec
+## How Caliper integrates tfsec
 
-eedom runs `tfsec` as a subprocess with JSON output, parses the results, and maps each finding to eedom's severity model. Custom rules (the `.json` files in this directory) are passed via `--custom-check-dir`.
+Caliper runs `tfsec` as a subprocess with JSON output, parses the results, and maps each finding to caliper's severity model. Custom rules (the `.json` files in this directory) are passed via `--custom-check-dir`.
 
 ```
 tfsec <path> --format json --custom-check-dir <this-dir> --force-all-dirs
@@ -23,7 +23,7 @@ tfsec <path> --format json --custom-check-dir <this-dir> --force-all-dirs
 
 ### Severity mapping
 
-| tfsec Severity | eedom Severity |
+| tfsec Severity | caliper Severity |
 |----------------|----------------|
 | CRITICAL       | critical       |
 | HIGH           | high           |
@@ -34,13 +34,13 @@ tfsec <path> --format json --custom-check-dir <this-dir> --force-all-dirs
 
 | File | Code | What it enforces |
 |------|------|------------------|
-| `custom-s3-versioning.json` | EEDOM-AWS-001 | S3 buckets must have versioning enabled |
-| `custom-rds-backup.json` | EEDOM-AWS-002 | RDS backup retention must be >= 7 days |
-| `custom-cloudwatch-log-retention.json` | EEDOM-AWS-003 | CloudWatch log groups must set retention policy |
+| `custom-s3-versioning.json` | CALIPER-AWS-001 | S3 buckets must have versioning enabled |
+| `custom-rds-backup.json` | CALIPER-AWS-002 | RDS backup retention must be >= 7 days |
+| `custom-cloudwatch-log-retention.json` | CALIPER-AWS-003 | CloudWatch log groups must set retention policy |
 
 ## Configuration
 
-See `tfsec.config.yaml` for the eedom plugin configuration (place in `.eedom/tfsec.config.yaml` in your repo).
+See `tfsec.config.yaml` for the caliper plugin configuration (place in `.caliper/tfsec.config.yaml` in your repo).
 
 ## Test fixtures
 

@@ -13,7 +13,7 @@
   },
   "checks": [
     {
-      "code": "EEDOM-AWS-010",
+      "code": "CALIPER-AWS-010",
       "description": "CloudTrail must be enabled in all regions to capture API activity across the entire AWS account",
       "impact": "API activity in regions without CloudTrail coverage goes undetected, creating audit blind spots and hindering incident response",
       "resolution": "Set is_multi_region_trail = true and include_global_service_events = true on the aws_cloudtrail resource",
@@ -32,7 +32,7 @@
       "errorMessage": "CloudTrail is not enabled in all regions (is_multi_region_trail must be true)"
     },
     {
-      "code": "EEDOM-AWS-010-B",
+      "code": "CALIPER-AWS-010-B",
       "description": "CloudTrail logging must not be explicitly disabled",
       "impact": "Disabling CloudTrail logging halts all audit trail capture, removing visibility into account-wide API activity and violating compliance requirements",
       "resolution": "Remove enable_logging = false or explicitly set enable_logging = true on the aws_cloudtrail resource",

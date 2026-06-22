@@ -89,8 +89,8 @@ jobs:
                       errors.append(f'{f}: rule \"{rule_id}\" has invalid kirby_id format: {meta[\"kirby_id\"]}')
                   if 'category' not in meta:
                       errors.append(f'{f}: rule \"{rule_id}\" missing category')
-                  if 'eedom-plugin' not in meta:
-                      errors.append(f'{f}: rule \"{rule_id}\" missing eedom-plugin')
+                  if 'caliper-plugin' not in meta:
+                      errors.append(f'{f}: rule \"{rule_id}\" missing caliper-plugin')
                   if 'compliance_mappings' not in meta:
                       errors.append(f'{f}: rule \"{rule_id}\" missing compliance_mappings')
                   if 'property-domain' not in meta:

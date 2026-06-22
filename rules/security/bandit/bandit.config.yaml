@@ -1,5 +1,5 @@
-# eedom Bandit plugin configuration
-# Place in .eedom/bandit.config.yaml in your repo
+# caliper Bandit plugin configuration
+# Place in .caliper/bandit.config.yaml in your repo
 
 # Maximum time (seconds) before the Bandit scan is killed.
 # Large monorepos may need longer; 120s covers most projects.
@@ -24,7 +24,7 @@ exclude_dirs:
   - "build/"
   - "dist/"
 
-# Maps Bandit severity + confidence to eedom severity.
+# Maps Bandit severity + confidence to caliper severity.
 # Format: <BANDIT_SEVERITY>_<BANDIT_CONFIDENCE>
 #
 # HIGH + HIGH   = confirmed dangerous pattern -> critical
@@ -49,7 +49,7 @@ severity_map:
 skips: []
 
 # Additional arguments passed directly to the bandit CLI.
-# --format json : structured output for eedom parsing
+# --format json : structured output for caliper parsing
 # -ll           : only report MEDIUM severity and above (reduces noise)
 extra_args: ["--format", "json"]
 

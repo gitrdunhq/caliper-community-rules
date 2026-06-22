@@ -34,7 +34,7 @@ jobs:
       - name: Package rules
         run: |
           TAG="${{ needs.release-please.outputs.tag_name }}"
-          tar czf "eedom-community-rules-${TAG}.tar.gz" \
+          tar czf "caliper-community-rules-${TAG}.tar.gz" \
             --exclude='*/tests/*' \
             --exclude='.github' \
             rules/ \
@@ -47,6 +47,6 @@ jobs:
       - name: Upload to release
         run: |
           TAG="${{ needs.release-please.outputs.tag_name }}"
-          gh release upload "$TAG" "eedom-community-rules-${TAG}.tar.gz"
+          gh release upload "$TAG" "caliper-community-rules-${TAG}.tar.gz"
         env:
           GH_TOKEN: ${{ github.token }}

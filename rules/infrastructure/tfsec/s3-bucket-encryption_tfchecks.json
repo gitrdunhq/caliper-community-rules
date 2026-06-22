@@ -13,7 +13,7 @@
   },
   "checks": [
     {
-      "code": "EEDOM-AWS-006",
+      "code": "CALIPER-AWS-006",
       "description": "S3 buckets must have server-side encryption configured via aws_s3_bucket_server_side_encryption_configuration with a rule block containing apply_server_side_encryption_by_default (SSE-S3 or SSE-KMS)",
       "impact": "Objects uploaded to S3 without SSE are stored in plaintext. If bucket access controls are bypassed or misconfigured, unencrypted objects are immediately readable without any additional key material",
       "resolution": "Create an aws_s3_bucket_server_side_encryption_configuration resource with a rule block and apply_server_side_encryption_by_default specifying sse_algorithm (AES256 for SSE-S3 or aws:kms for SSE-KMS). Prefer aws:kms for regulated workloads",

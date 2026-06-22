@@ -1,6 +1,6 @@
 # pip-audit Rules
 
-Configuration and examples for the eedom [pip-audit](https://github.com/pypa/pip-audit) plugin. pip-audit scans Python environments and dependency files for packages with known vulnerabilities using the [OSV](https://osv.dev/) database and PyPI's vulnerability API.
+Configuration and examples for the caliper [pip-audit](https://github.com/pypa/pip-audit) plugin. pip-audit scans Python environments and dependency files for packages with known vulnerabilities using the [OSV](https://osv.dev/) database and PyPI's vulnerability API.
 
 ## What pip-audit catches
 
@@ -9,13 +9,13 @@ Configuration and examples for the eedom [pip-audit](https://github.com/pypa/pip
 - **PyPI vulnerability reports** from the PyPI JSON API
 - Vulnerabilities across `requirements.txt`, `pyproject.toml`, `Pipfile.lock`, and installed environments
 
-## How eedom integrates it
+## How Caliper integrates it
 
-The eedom pip-audit plugin runs `pip-audit --format=json` as a subprocess, parses the structured output, and maps each finding to an eedom severity level based on CVSS score and fix availability.
+The caliper pip-audit plugin runs `pip-audit --format=json` as a subprocess, parses the structured output, and maps each finding to an caliper severity level based on CVSS score and fix availability.
 
 ### Severity mapping
 
-| Fix Available | CVSS Score | eedom Severity |
+| Fix Available | CVSS Score | caliper Severity |
 |---------------|------------|----------------|
 | Yes | 9.0+ | critical |
 | Yes | 7.0--8.9 | high |
@@ -30,9 +30,9 @@ Fix availability does not downgrade severity -- a critical vulnerability is crit
 ## Triage workflow
 
 1. **pip-audit finds a vulnerable dependency.** The plugin parses JSON output and extracts package name, installed version, fixed version (if any), vulnerability ID, and CVSS score.
-2. **eedom maps to severity** using the table above (CVSS score + fix availability).
+2. **caliper maps to severity** using the table above (CVSS score + fix availability).
 3. **If a fix is available**, the PR comment includes an actionable recommendation: "Upgrade `package` from `X.Y.Z` to `A.B.C` to resolve `VULN-ID`."
-4. **If no fix is available**, eedom checks the allowlist:
+4. **If no fix is available**, caliper checks the allowlist:
    - If the vulnerability is allowlisted with a valid (non-expired) entry, the finding is suppressed.
    - If not allowlisted, the finding is reported normally.
 5. **Expired allowlist entries** auto-escalate to `warning` severity regardless of original severity, signaling that the exemption needs re-evaluation.
@@ -51,7 +51,7 @@ pip-audit is the best fit for Python-focused scanning: it understands Python pac
 
 | File | What it does |
 |------|-------------|
-| `pip-audit.config.yaml` | eedom plugin configuration -- severity mapping, sources, timeouts |
+| `pip-audit.config.yaml` | caliper plugin configuration -- severity mapping, sources, timeouts |
 | `allowlist-example.yaml` | Example allowlist for suppressing known acceptable vulnerabilities |
 
 ## References

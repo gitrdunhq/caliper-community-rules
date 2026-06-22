@@ -1,11 +1,11 @@
-# Test fixtures for KIRBY-INF-009 / EEDOM-AWS-007 — Security Group SSH Lockdown
+# Test fixtures for KIRBY-INF-009 / CALIPER-AWS-007 — Security Group SSH Lockdown
 # PASS: security group rules with restricted CIDRs (no 0.0.0.0/0 or ::/0)
 # FAIL: security group rules allowing unrestricted IPv4 (0.0.0.0/0) or IPv6 (::/0) ingress
 #
-# TFSEC LIMITATION: EEDOM-AWS-007 applies to all aws_security_group_rule resources,
+# TFSEC LIMITATION: CALIPER-AWS-007 applies to all aws_security_group_rule resources,
 # not only port 22. Intentionally public ports (80, 443) should carry:
-#   # tfsec-ignore:EEDOM-AWS-007
-#   # tfsec-ignore:EEDOM-AWS-007-IPV6
+#   # tfsec-ignore:CALIPER-AWS-007
+#   # tfsec-ignore:CALIPER-AWS-007-IPV6
 
 # --------------------------------------------------------------------------
 # PASS cases
@@ -48,37 +48,37 @@ resource "aws_security_group_rule" "pass_ssh_ipv6_restricted" {
 # FAIL cases
 # --------------------------------------------------------------------------
 
-# FAIL: SSH open to the entire internet (0.0.0.0/0) — primary target of EEDOM-AWS-007
+# FAIL: SSH open to the entire internet (0.0.0.0/0) — primary target of CALIPER-AWS-007
 resource "aws_security_group_rule" "fail_ssh_open_world" {
   type        = "ingress"
   from_port   = 22
   to_port     = 22
   protocol    = "tcp"
-  cidr_blocks = ["0.0.0.0/0"] # FAIL: unrestricted IPv4 — fails EEDOM-AWS-007
+  cidr_blocks = ["0.0.0.0/0"] # FAIL: unrestricted IPv4 — fails CALIPER-AWS-007
 
   security_group_id = "sg-00000000000000002"
 }
 
-# FAIL: SSH open to the entire internet over IPv6 — target of EEDOM-AWS-007-IPV6
+# FAIL: SSH open to the entire internet over IPv6 — target of CALIPER-AWS-007-IPV6
 resource "aws_security_group_rule" "fail_ssh_open_ipv6" {
   type             = "ingress"
   from_port        = 22
   to_port          = 22
   protocol         = "tcp"
-  ipv6_cidr_blocks = ["::/0"] # FAIL: unrestricted IPv6 — fails EEDOM-AWS-007-IPV6
+  ipv6_cidr_blocks = ["::/0"] # FAIL: unrestricted IPv6 — fails CALIPER-AWS-007-IPV6
 
   security_group_id = "sg-00000000000000002"
 }
 
 # FAIL: any port open to 0.0.0.0/0 — tfsec limitation causes this to be flagged too
-# Add tfsec-ignore:EEDOM-AWS-007 if this is intentionally public
+# Add tfsec-ignore:CALIPER-AWS-007 if this is intentionally public
 resource "aws_security_group_rule" "fail_http_open_world" {
   type        = "ingress"
   from_port   = 80
   to_port     = 80
   protocol    = "tcp"
-  cidr_blocks = ["0.0.0.0/0"] # FAIL: flagged by EEDOM-AWS-007 due to tfsec limitation
-  # tfsec-ignore:EEDOM-AWS-007  # uncomment to suppress for intentionally public HTTP
+  cidr_blocks = ["0.0.0.0/0"] # FAIL: flagged by CALIPER-AWS-007 due to tfsec limitation
+  # tfsec-ignore:CALIPER-AWS-007  # uncomment to suppress for intentionally public HTTP
 
   security_group_id = "sg-00000000000000002"
 }

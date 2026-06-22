@@ -1,4 +1,4 @@
-# Test fixtures for KIRBY-INF-028 / EEDOM-AWS-016 — ElastiCache Encryption in Transit
+# Test fixtures for KIRBY-INF-028 / CALIPER-AWS-016 — ElastiCache Encryption in Transit
 # PASS: aws_elasticache_replication_group with transit_encryption_enabled = true
 # FAIL: aws_elasticache_replication_group with transit_encryption_enabled = false or attribute omitted
 
@@ -16,7 +16,7 @@ resource "aws_elasticache_replication_group" "pass_tls_enabled" {
   engine_version       = "7.0"
   port                 = 6379
 
-  transit_encryption_enabled = true # PASS: TLS enforced — satisfies EEDOM-AWS-016
+  transit_encryption_enabled = true # PASS: TLS enforced — satisfies CALIPER-AWS-016
   at_rest_encryption_enabled = true
 
   subnet_group_name  = aws_elasticache_subnet_group.main.name
@@ -58,7 +58,7 @@ resource "aws_elasticache_replication_group" "fail_tls_disabled" {
   engine_version       = "7.0"
   port                 = 6379
 
-  transit_encryption_enabled = false # FAIL: plaintext traffic — fails EEDOM-AWS-016
+  transit_encryption_enabled = false # FAIL: plaintext traffic — fails CALIPER-AWS-016
 
   tags = {
     Environment = "staging"
@@ -76,7 +76,7 @@ resource "aws_elasticache_replication_group" "fail_tls_omitted" {
   port                 = 6379
 
   # transit_encryption_enabled omitted — defaults to false, plaintext Redis
-  # fails EEDOM-AWS-016
+  # fails CALIPER-AWS-016
 
   tags = {
     Environment = "development"

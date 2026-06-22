@@ -1,4 +1,4 @@
-# Test fixtures for KIRBY-INF-010 / EEDOM-AWS-008 — VPC Flow Logs Enabled
+# Test fixtures for KIRBY-INF-010 / CALIPER-AWS-008 — VPC Flow Logs Enabled
 # PASS: aws_flow_log resource with vpc_id attribute present
 # FAIL: aws_flow_log resource with vpc_id absent (subnet/eni-scoped only, or malformed)
 #
@@ -54,7 +54,7 @@ resource "aws_flow_log" "pass_vpc_flow_log_s3" {
 # FAIL: aws_flow_log scoped to a subnet (subnet_id only, no vpc_id)
 # This represents a gap — not all traffic is captured at the VPC level
 resource "aws_flow_log" "fail_subnet_only" {
-  subnet_id            = "subnet-00000000000000001" # FAIL: no vpc_id — fails EEDOM-AWS-008
+  subnet_id            = "subnet-00000000000000001" # FAIL: no vpc_id — fails CALIPER-AWS-008
   traffic_type         = "ALL"
   log_destination_type = "s3"
   log_destination      = "arn:aws:s3:::example-flow-logs-bucket/subnet/"
@@ -62,7 +62,7 @@ resource "aws_flow_log" "fail_subnet_only" {
 
 # FAIL: aws_flow_log scoped to a network interface only (no vpc-level coverage)
 resource "aws_flow_log" "fail_eni_only" {
-  eni_id               = "eni-00000000000000001" # FAIL: no vpc_id — fails EEDOM-AWS-008
+  eni_id               = "eni-00000000000000001" # FAIL: no vpc_id — fails CALIPER-AWS-008
   traffic_type         = "ALL"
   log_destination_type = "s3"
   log_destination      = "arn:aws:s3:::example-flow-logs-bucket/eni/"

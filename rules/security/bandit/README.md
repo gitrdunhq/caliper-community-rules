@@ -15,18 +15,18 @@
 | **Network** | Binding to `0.0.0.0`, unvalidated `urllib.urlopen()`, HTTP without TLS |
 | **Template injection** | Jinja2 with `autoescape=False`, Mako templates, Django `mark_safe()` |
 
-## How eedom integrates Bandit
+## How Caliper integrates Bandit
 
-eedom runs Bandit as a subprocess against the target repository, parses the JSON output, and maps each finding to the eedom severity model. The integration:
+Caliper runs Bandit as a subprocess against the target repository, parses the JSON output, and maps each finding to the caliper severity model. The integration:
 
 1. Invokes `bandit -r <target_dirs> --format json -c bandit-profile.yaml`
 2. Parses structured JSON output (test ID, severity, confidence, filename, line number, code snippet)
-3. Maps Bandit severity + confidence to eedom severity using the matrix below
-4. Deduplicates findings and merges into the unified eedom report
+3. Maps Bandit severity + confidence to caliper severity using the matrix below
+4. Deduplicates findings and merges into the unified caliper report
 
 ### Severity mapping
 
-| Bandit Severity | Bandit Confidence | eedom Severity |
+| Bandit Severity | Bandit Confidence | caliper Severity |
 |-----------------|-------------------|----------------|
 | HIGH | HIGH | critical |
 | HIGH | MEDIUM | high |
@@ -97,7 +97,7 @@ Rationale: A HIGH-severity finding with HIGH confidence is a confirmed dangerous
 
 | File | Purpose |
 |------|---------|
-| `bandit.config.yaml` | eedom plugin configuration (severity mapping, target dirs, timeouts) |
+| `bandit.config.yaml` | caliper plugin configuration (severity mapping, target dirs, timeouts) |
 | `bandit-profile.yaml` | Curated Bandit profile enabling security-critical checks |
 | `test-cases.py` | Positive and negative test cases for validating check coverage |
 

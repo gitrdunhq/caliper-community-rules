@@ -1,5 +1,5 @@
 # Kirby Rule Schema v1.0
-# Every rule in eedom-community-rules MUST carry this metadata.
+# Every rule in caliper-community-rules MUST carry this metadata.
 # Scanner-native format varies (Semgrep YAML, tfsec JSON, cfn-nag Ruby),
 # but compliance_mappings and kirby_id are universal.
 
@@ -38,7 +38,7 @@ fields:
     type: string
     required: true
     enum: [critical, high, medium, low, info]
-    description: Eedom-normalized severity
+    description: Caliper-normalized severity
 
   targets:
     type: array
@@ -89,7 +89,7 @@ fields:
 # Where compliance_mappings live in each scanner format:
 #
 # Semgrep:  metadata.kirby_id, metadata.compliance_mappings (native YAML)
-# tfsec:    _kirby block at top of JSON (ignored by tfsec, parsed by eedom)
+# tfsec:    _kirby block at top of JSON (ignored by tfsec, parsed by caliper)
 # cfn-nag:  COMPLIANCE constant hash in Ruby class
 # OPA:      annotation block in Rego
 # Bandit:   bandit.config.yaml kirby_rules section

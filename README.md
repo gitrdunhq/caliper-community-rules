@@ -1,10 +1,10 @@
-# eedom Community Rules
+# Caliper Community Rules
 
-Community-contributed rules and configurations for [eedom](https://github.com/sam-fakhreddine/eedom) -- the deterministic code review scanner with 15 plugins and zero LLM.
+Community-contributed rules and configurations for [caliper](https://github.com/gitrdunhq/caliper) -- the deterministic code review scanner with 15 plugins and zero LLM.
 
-## What is eedom?
+## What is Caliper?
 
-eedom is a deterministic code review tool that runs 15 specialized plugins across your codebase. No LLM. No AI. Every finding is reproducible and deterministic.
+Caliper is a deterministic code review tool that runs 15 specialized plugins across your codebase. No LLM. No AI. Every finding is reproducible and deterministic.
 
 | Plugin | Category | What it does |
 |--------|----------|-------------|
@@ -26,25 +26,25 @@ eedom is a deterministic code review tool that runs 15 specialized plugins acros
 
 ## What is this repo?
 
-This repository contains **community-contributed rules, configs, and policies** that extend eedom's built-in checks. Think of it as a shared library of battle-tested patterns that any team can adopt.
+This repository contains **community-contributed rules, configs, and policies** that extend caliper's built-in checks. Think of it as a shared library of battle-tested patterns that any team can adopt.
 
 ## How to use
 
-### Option 1: Point eedom at this repo
+### Option 1: Point Caliper at this repo
 
 ```bash
-eedom scan --rules-repo eedom-community-rules/ ./your-project
+caliper scan --rules-repo caliper-community-rules/ ./your-project
 ```
 
 ### Option 2: Copy individual rules
 
-Browse the category directories, find rules that fit your stack, and copy them into your project's eedom configuration.
+Browse the category directories, find rules that fit your stack, and copy them into your project's caliper configuration.
 
 ### Option 3: Cherry-pick by category
 
 ```bash
-cp -r eedom-community-rules/rules/security/  .eedom/rules/security/
-cp -r eedom-community-rules/rules/supply-chain/ .eedom/rules/supply-chain/
+cp -r caliper-community-rules/rules/security/  .caliper/rules/security/
+cp -r caliper-community-rules/rules/supply-chain/ .caliper/rules/supply-chain/
 ```
 
 ## Directory structure

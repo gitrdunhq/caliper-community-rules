@@ -14,7 +14,7 @@
   },
   "checks": [
     {
-      "code": "EEDOM-AWS-005",
+      "code": "CALIPER-AWS-005",
       "description": "RDS instances must have storage encryption enabled to protect data at rest",
       "impact": "Unencrypted RDS storage exposes sensitive data if the underlying EBS volumes are accessed directly or if a snapshot is shared or restored outside the account",
       "resolution": "Set storage_encrypted = true on the aws_db_instance resource. Note: encryption cannot be enabled on an existing unencrypted instance — a snapshot restore to a new encrypted instance is required",

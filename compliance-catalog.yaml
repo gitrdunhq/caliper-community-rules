@@ -1,5 +1,5 @@
 # Kirby Compliance Catalog v1.0
-# Maps every rule in eedom-community-rules to canonical compliance control IDs.
+# Maps every rule in caliper-community-rules to canonical compliance control IDs.
 # This is the single source of truth for cross-framework compliance coverage.
 
 schema_version: "1.0"

@@ -1,4 +1,4 @@
-# Test fixtures for KIRBY-INF-023 / EEDOM-AZ-001 — Azure Storage Public Access Disabled
+# Test fixtures for KIRBY-INF-023 / CALIPER-AZ-001 — Azure Storage Public Access Disabled
 # PASS: azurerm_storage_account with allow_nested_items_to_be_public = false
 # FAIL: azurerm_storage_account with allow_nested_items_to_be_public = true or attribute omitted
 
@@ -14,7 +14,7 @@ resource "azurerm_storage_account" "pass_public_access_disabled" {
   account_tier             = "Standard"
   account_replication_type = "LRS"
 
-  allow_nested_items_to_be_public = false # PASS: public blob access disabled — satisfies EEDOM-AZ-001
+  allow_nested_items_to_be_public = false # PASS: public blob access disabled — satisfies CALIPER-AZ-001
 
   tags = {
     Environment = "production"
@@ -50,7 +50,7 @@ resource "azurerm_storage_account" "fail_public_access_enabled" {
   account_tier             = "Standard"
   account_replication_type = "LRS"
 
-  allow_nested_items_to_be_public = true # FAIL: public blob access enabled — fails EEDOM-AZ-001
+  allow_nested_items_to_be_public = true # FAIL: public blob access enabled — fails CALIPER-AZ-001
 
   tags = {
     Environment = "staging"
@@ -64,7 +64,7 @@ resource "azurerm_storage_account" "fail_public_access_omitted" {
   location                 = "eastus"
   account_tier             = "Standard"
   account_replication_type = "LRS"
-  # allow_nested_items_to_be_public omitted — defaults to true in AzureRM v3+, fails EEDOM-AZ-001
+  # allow_nested_items_to_be_public omitted — defaults to true in AzureRM v3+, fails CALIPER-AZ-001
 
   tags = {
     Environment = "staging"

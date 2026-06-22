@@ -1,4 +1,4 @@
-# Test fixtures for KIRBY-INF-026 / EEDOM-AWS-014 — Multi-AZ RDS
+# Test fixtures for KIRBY-INF-026 / CALIPER-AWS-014 — Multi-AZ RDS
 # PASS: aws_db_instance with multi_az = true
 # FAIL: aws_db_instance with multi_az = false or attribute omitted
 
@@ -21,7 +21,7 @@ resource "aws_db_instance" "pass_multi_az_enabled" {
   backup_retention_period = 7
   deletion_protection     = true
 
-  multi_az = true # PASS: Multi-AZ enabled — satisfies EEDOM-AWS-014
+  multi_az = true # PASS: Multi-AZ enabled — satisfies CALIPER-AWS-014
 
   tags = {
     Environment = "production"
@@ -60,7 +60,7 @@ resource "aws_db_instance" "fail_multi_az_false" {
   username          = "admin"
   password          = var.db_password
 
-  multi_az = false # FAIL: single-AZ — no automatic failover — fails EEDOM-AWS-014
+  multi_az = false # FAIL: single-AZ — no automatic failover — fails CALIPER-AWS-014
 
   tags = {
     Environment = "staging"
@@ -76,7 +76,7 @@ resource "aws_db_instance" "fail_multi_az_omitted" {
   allocated_storage = 20
   username          = "admin"
   password          = var.db_password
-  # multi_az omitted — defaults to false, no HA — fails EEDOM-AWS-014
+  # multi_az omitted — defaults to false, no HA — fails CALIPER-AWS-014
 
   tags = {
     Environment = "development"

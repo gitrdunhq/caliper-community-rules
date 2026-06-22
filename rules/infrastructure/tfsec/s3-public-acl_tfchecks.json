@@ -14,7 +14,7 @@
   },
   "checks": [
     {
-      "code": "EEDOM-AWS-013",
+      "code": "CALIPER-AWS-013",
       "description": "S3 bucket ACL must not be set to public-read. The public-read canned ACL grants read access to all users including unauthenticated users, exposing bucket contents to the public internet.",
       "impact": "Objects in the bucket are readable by any unauthenticated user on the internet, leading to data disclosure or exfiltration of sensitive content",
       "resolution": "Set the acl attribute to private (the default), or remove the aws_s3_bucket_acl resource if not needed. Use bucket policies with explicit IAM principal restrictions instead of canned public ACLs.",
@@ -33,7 +33,7 @@
       "errorMessage": "S3 bucket ACL is set to public-read, which exposes all objects to unauthenticated public access on the internet"
     },
     {
-      "code": "EEDOM-AWS-013-WRITE",
+      "code": "CALIPER-AWS-013-WRITE",
       "description": "S3 bucket ACL must not be set to public-read-write. The public-read-write canned ACL grants read and write access to all users including unauthenticated users, allowing anyone to upload, modify, or delete objects.",
       "impact": "Any unauthenticated user on the internet can read, write, or delete objects in the bucket, enabling data exfiltration, ransomware staging, content replacement, or abuse for malware hosting",
       "resolution": "Set the acl attribute to private (the default). The public-read-write ACL must never be used in any environment. Use bucket policies with explicit deny rules and least-privilege IAM principals instead.",
@@ -52,7 +52,7 @@
       "errorMessage": "S3 bucket ACL is set to public-read-write, which grants unrestricted read and write access to all internet users including unauthenticated users"
     },
     {
-      "code": "EEDOM-AWS-013-AUTH",
+      "code": "CALIPER-AWS-013-AUTH",
       "description": "S3 bucket ACL must not be set to authenticated-read. The authenticated-read canned ACL grants read access to all authenticated AWS accounts — not just accounts in your organization, but any of the hundreds of millions of AWS accounts worldwide.",
       "impact": "Any authenticated AWS user globally can read bucket contents, representing a broad and poorly scoped exposure that bypasses organizational access boundaries",
       "resolution": "Set the acl attribute to private (the default). Use explicit bucket policies with specific IAM principals or aws_s3_bucket_policy resources that restrict access to known account IDs or organization units.",

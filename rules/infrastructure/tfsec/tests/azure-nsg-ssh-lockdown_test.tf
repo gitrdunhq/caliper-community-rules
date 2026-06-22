@@ -1,11 +1,11 @@
-# Test fixtures for KIRBY-INF-024 / EEDOM-AZ-002 — Azure NSG SSH Lockdown
+# Test fixtures for KIRBY-INF-024 / CALIPER-AZ-002 — Azure NSG SSH Lockdown
 # PASS: azurerm_network_security_rule with source_address_prefix restricted to a specific IP/service tag
 # FAIL: azurerm_network_security_rule with source_address_prefix = "*" (any source)
 #
-# TFSEC LIMITATION: EEDOM-AZ-002 applies to all Allow inbound rules, not only port 22.
+# TFSEC LIMITATION: CALIPER-AZ-002 applies to all Allow inbound rules, not only port 22.
 # Intentionally public ingress rules (e.g., HTTP/HTTPS load balancer front-ends using a
 # service tag) should carry:
-#   # tfsec-ignore:EEDOM-AZ-002
+#   # tfsec-ignore:CALIPER-AZ-002
 
 # --------------------------------------------------------------------------
 # PASS cases
@@ -20,7 +20,7 @@ resource "azurerm_network_security_rule" "pass_ssh_restricted" {
   protocol                    = "Tcp"
   source_port_range           = "*"
   destination_port_range      = "22"
-  source_address_prefix       = "10.0.0.0/8" # PASS: restricted to internal network — satisfies EEDOM-AZ-002
+  source_address_prefix       = "10.0.0.0/8" # PASS: restricted to internal network — satisfies CALIPER-AZ-002
   destination_address_prefix  = "*"
   resource_group_name         = "rg-example"
   network_security_group_name = "nsg-example"
@@ -50,7 +50,7 @@ resource "azurerm_network_security_rule" "pass_deny_all" {
   protocol                    = "*"
   source_port_range           = "*"
   destination_port_range      = "*"
-  source_address_prefix       = "*" # PASS: Deny rule — tfsec evaluates access=Allow only for EEDOM-AZ-002
+  source_address_prefix       = "*" # PASS: Deny rule — tfsec evaluates access=Allow only for CALIPER-AZ-002
   destination_address_prefix  = "*"
   resource_group_name         = "rg-example"
   network_security_group_name = "nsg-example"
@@ -60,7 +60,7 @@ resource "azurerm_network_security_rule" "pass_deny_all" {
 # FAIL cases
 # --------------------------------------------------------------------------
 
-# FAIL: SSH open to the entire internet — primary target of EEDOM-AZ-002
+# FAIL: SSH open to the entire internet — primary target of CALIPER-AZ-002
 resource "azurerm_network_security_rule" "fail_ssh_wildcard" {
   name                        = "fail-allow-ssh-any"
   priority                    = 100
@@ -69,7 +69,7 @@ resource "azurerm_network_security_rule" "fail_ssh_wildcard" {
   protocol                    = "Tcp"
   source_port_range           = "*"
   destination_port_range      = "22"
-  source_address_prefix       = "*" # FAIL: unrestricted inbound — fails EEDOM-AZ-002
+  source_address_prefix       = "*" # FAIL: unrestricted inbound — fails CALIPER-AZ-002
   destination_address_prefix  = "*"
   resource_group_name         = "rg-example"
   network_security_group_name = "nsg-example"
@@ -84,7 +84,7 @@ resource "azurerm_network_security_rule" "fail_rdp_wildcard" {
   protocol                    = "Tcp"
   source_port_range           = "*"
   destination_port_range      = "3389"
-  source_address_prefix       = "*" # FAIL: unrestricted inbound — fails EEDOM-AZ-002
+  source_address_prefix       = "*" # FAIL: unrestricted inbound — fails CALIPER-AZ-002
   destination_address_prefix  = "*"
   resource_group_name         = "rg-example"
   network_security_group_name = "nsg-example"

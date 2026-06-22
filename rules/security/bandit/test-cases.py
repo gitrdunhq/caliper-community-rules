@@ -1,5 +1,5 @@
 """
-Bandit test cases for eedom community rules.
+Bandit test cases for caliper community rules.
 
 Each section demonstrates a Bandit check with:
   - VULNERABLE: code that should trigger the check

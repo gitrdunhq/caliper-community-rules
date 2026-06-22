@@ -5,7 +5,7 @@ applyTo: 'rules/**/tfsec/*.json'
 
 # tfsec Custom Check Conventions
 
-tfsec checks in this repo run via the eedom `tfsec` plugin. Every check is a JSON file under `rules/{category}/tfsec/` named `{check-name}_tfchecks.json`. The `_tfchecks.json` suffix is required by tfsec's custom check loader.
+tfsec checks in this repo run via the caliper `tfsec` plugin. Every check is a JSON file under `rules/{category}/tfsec/` named `{check-name}_tfchecks.json`. The `_tfchecks.json` suffix is required by tfsec's custom check loader.
 
 ## File structure
 
@@ -22,7 +22,7 @@ tfsec checks in this repo run via the eedom `tfsec` plugin. Every check is a JSO
   },
   "checks": [
     {
-      "code": "EEDOM-AWS-NNN",
+      "code": "CALIPER-AWS-NNN",
       "description": "Short human-readable description of what this check enforces",
       "impact": "What goes wrong if this check fails in production",
       "resolution": "Exact Terraform resource and attribute to set",
@@ -38,7 +38,7 @@ tfsec checks in this repo run via the eedom `tfsec` plugin. Every check is a JSO
 
 ## `_kirby` block
 
-The `_kirby` top-level key is ignored by tfsec but parsed by eedom for compliance reporting. It is required on every file.
+The `_kirby` top-level key is ignored by tfsec but parsed by caliper for compliance reporting. It is required on every file.
 
 | Field | Description |
 |-------|-------------|
@@ -54,10 +54,10 @@ A single `_tfchecks.json` file may contain multiple check objects when related c
 
 | Cloud | Prefix | Example |
 |-------|--------|---------|
-| AWS | `EEDOM-AWS-NNN` | `EEDOM-AWS-042` |
-| Azure | `EEDOM-AZ-NNN` | `EEDOM-AZ-007` |
-| GCP | `EEDOM-GCP-NNN` | `EEDOM-GCP-015` |
-| Multi-cloud | `EEDOM-CLOUD-NNN` | `EEDOM-CLOUD-001` |
+| AWS | `CALIPER-AWS-NNN` | `CALIPER-AWS-042` |
+| Azure | `CALIPER-AZ-NNN` | `CALIPER-AZ-007` |
+| GCP | `CALIPER-GCP-NNN` | `CALIPER-GCP-015` |
+| Multi-cloud | `CALIPER-CLOUD-NNN` | `CALIPER-CLOUD-001` |
 
 Codes are sequential within their prefix namespace. Check existing files to find the next available number.
 

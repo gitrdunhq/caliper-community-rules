@@ -10,7 +10,7 @@
   },
   "checks": [
     {
-      "code": "EEDOM-AWS-001",
+      "code": "CALIPER-AWS-001",
       "description": "S3 buckets must have versioning enabled for data protection and recovery",
       "impact": "Data loss from accidental deletion or overwrites cannot be recovered",
       "resolution": "Create an aws_s3_bucket_versioning resource with versioning_configuration.status set to Enabled",

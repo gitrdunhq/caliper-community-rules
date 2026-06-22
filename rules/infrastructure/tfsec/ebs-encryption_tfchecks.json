@@ -12,7 +12,7 @@
   },
   "checks": [
     {
-      "code": "EEDOM-AWS-009",
+      "code": "CALIPER-AWS-009",
       "description": "EBS volumes must have encryption enabled to protect data at rest",
       "impact": "Unencrypted EBS volumes expose data if the underlying physical media is decommissioned, if snapshots are shared to wrong accounts, or if an EBS volume is detached and reattached to an unauthorized instance",
       "resolution": "Set encrypted = true on the aws_ebs_volume resource. Optionally specify kms_key_id to use a customer-managed KMS key instead of the default AWS-managed key",

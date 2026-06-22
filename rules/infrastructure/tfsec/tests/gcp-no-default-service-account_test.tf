@@ -1,4 +1,4 @@
-# Test fixtures for KIRBY-INF-025 / EEDOM-GCP-001 — GCP No Default Service Account
+# Test fixtures for KIRBY-INF-025 / CALIPER-GCP-001 — GCP No Default Service Account
 # PASS: google_compute_instance with an explicit service_account block
 # FAIL: google_compute_instance with no service_account block (GCP uses the default Compute SA)
 
@@ -22,7 +22,7 @@ resource "google_compute_instance" "pass_custom_sa" {
     network = "default"
   }
 
-  service_account { # PASS: explicit service account — satisfies EEDOM-GCP-001
+  service_account { # PASS: explicit service account — satisfies CALIPER-GCP-001
     email  = "my-app-sa@my-project.iam.gserviceaccount.com"
     scopes = ["cloud-platform"]
   }
@@ -74,5 +74,5 @@ resource "google_compute_instance" "fail_no_sa_block" {
   }
 
   # service_account block omitted — default -compute@developer.gserviceaccount.com used
-  # violates least-privilege principle — fails EEDOM-GCP-001
+  # violates least-privilege principle — fails CALIPER-GCP-001
 }

@@ -12,8 +12,8 @@
   },
   "checks": [
     {
-      "code": "EEDOM-AWS-007",
-      "description": "Security group ingress rules must not allow SSH (port 22) from the public internet (0.0.0.0/0). TFSEC LIMITATION: This check applies to all aws_security_group_rule resources with type=ingress and flags any rule that allows unrestricted IPv4 access. Rules for intentionally public ports (80, 443) should carry a tfsec-ignore:EEDOM-AWS-007 annotation. For port-specific conditional enforcement, use OPA/Sentinel or tfsec built-in rule aws-vpc-no-public-ingress-sgr.",
+      "code": "CALIPER-AWS-007",
+      "description": "Security group ingress rules must not allow SSH (port 22) from the public internet (0.0.0.0/0). TFSEC LIMITATION: This check applies to all aws_security_group_rule resources with type=ingress and flags any rule that allows unrestricted IPv4 access. Rules for intentionally public ports (80, 443) should carry a tfsec-ignore:CALIPER-AWS-007 annotation. For port-specific conditional enforcement, use OPA/Sentinel or tfsec built-in rule aws-vpc-no-public-ingress-sgr.",
       "impact": "Allowing SSH ingress from 0.0.0.0/0 exposes instances to brute-force and credential-stuffing attacks from the entire internet, bypassing network-level access controls",
       "resolution": "Replace 0.0.0.0/0 in cidr_blocks with a specific CIDR range (bastion host IP, VPN CIDR, or management subnet). Use a bastion host or AWS Systems Manager Session Manager instead of direct SSH exposure",
       "requiredTypes": [
@@ -31,8 +31,8 @@
       "errorMessage": "Security group rule allows unrestricted IPv4 ingress (0.0.0.0/0). SSH and other management ports must restrict access to known IP ranges"
     },
     {
-      "code": "EEDOM-AWS-007-IPV6",
-      "description": "Security group ingress rules must not allow SSH (port 22) from the public internet (::/0 IPv6). TFSEC LIMITATION: This check applies to all aws_security_group_rule resources and flags any rule that allows unrestricted IPv6 access. Rules for intentionally public ports (80, 443) should carry a tfsec-ignore:EEDOM-AWS-007-IPV6 annotation.",
+      "code": "CALIPER-AWS-007-IPV6",
+      "description": "Security group ingress rules must not allow SSH (port 22) from the public internet (::/0 IPv6). TFSEC LIMITATION: This check applies to all aws_security_group_rule resources and flags any rule that allows unrestricted IPv6 access. Rules for intentionally public ports (80, 443) should carry a tfsec-ignore:CALIPER-AWS-007-IPV6 annotation.",
       "impact": "Allowing SSH ingress from ::/0 exposes dual-stack instances to brute-force attacks over IPv6, a path often overlooked in security group reviews",
       "resolution": "Replace ::/0 in ipv6_cidr_blocks with a specific IPv6 CIDR range, or remove IPv6 ingress on management ports entirely",
       "requiredTypes": [

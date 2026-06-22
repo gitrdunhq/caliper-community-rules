@@ -1,5 +1,5 @@
-# eedom tfsec plugin configuration
-# Place in .eedom/tfsec.config.yaml in your repo
+# caliper tfsec plugin configuration
+# Place in .caliper/tfsec.config.yaml in your repo
 
 scan_timeout: 120
 terraform_version: null    # auto-detect, or pin: "1.5"

@@ -10,7 +10,7 @@
   },
   "checks": [
     {
-      "code": "EEDOM-AWS-003",
+      "code": "CALIPER-AWS-003",
       "description": "CloudWatch log groups must have a retention policy to control costs and comply with data retention requirements",
       "impact": "Unbounded log retention increases storage costs and may violate data retention policies",
       "resolution": "Set retention_in_days on the CloudWatch log group resource",

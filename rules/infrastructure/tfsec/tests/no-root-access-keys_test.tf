@@ -1,4 +1,4 @@
-# Test fixtures for KIRBY-SEC-006 / EEDOM-AWS-011 — No Root Access Keys
+# Test fixtures for KIRBY-SEC-006 / CALIPER-AWS-011 — No Root Access Keys
 # PASS: aws_iam_access_key for a named IAM user (user != "root")
 # FAIL: aws_iam_access_key with user = "root"
 
@@ -39,7 +39,7 @@ resource "aws_iam_access_key" "pass_auditor" {
 # FAIL cases
 # --------------------------------------------------------------------------
 
-# FAIL: access key explicitly referencing the root user — fails EEDOM-AWS-011
+# FAIL: access key explicitly referencing the root user — fails CALIPER-AWS-011
 resource "aws_iam_access_key" "fail_root_key" {
   user = "root" # FAIL: root account access keys must never exist (CIS 1.4)
 }

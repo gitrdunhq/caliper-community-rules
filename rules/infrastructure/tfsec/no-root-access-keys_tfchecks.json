@@ -12,7 +12,7 @@
   },
   "checks": [
     {
-      "code": "EEDOM-AWS-011",
+      "code": "CALIPER-AWS-011",
       "description": "AWS root account access keys must not exist — root credentials bypass all IAM policies and give unrestricted account access",
       "impact": "Root account access keys cannot be scoped by IAM policies. A compromised root key gives an attacker complete, irrevocable control of the AWS account including the ability to delete all users, disable CloudTrail, and destroy all resources.",
       "resolution": "Delete the aws_iam_access_key resource referencing the root user. Use a least-privilege IAM user or role with only the permissions required for the task.",

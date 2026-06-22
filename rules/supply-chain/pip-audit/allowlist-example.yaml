@@ -2,7 +2,7 @@
 # Use when a vulnerability is acknowledged but cannot be immediately fixed.
 # Every entry MUST have a reason, expiration date, and approver.
 #
-# Place your real allowlist in .eedom/pip-audit-allowlist.yaml in your repo.
+# Place your real allowlist in .caliper/pip-audit-allowlist.yaml in your repo.
 # Entries with a past `expires` date auto-escalate to warning severity.
 
 entries:
