@@ -80,7 +80,7 @@ rules/
     blast-radius/
     coding-standards/
   content/              -- Spelling, docs, i18n
-    cspell/
+    typos/
 ```
 
 Each category has its own README explaining the threat model and what kinds of rules belong there.
