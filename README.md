@@ -23,7 +23,7 @@ Caliper is a deterministic code review tool that runs 19 specialized plugins acr
 | SwiftLint | Code Quality | Swift style + code smells |
 | SwiftFormat | Code Quality | Swift formatting lint |
 | ls-lint | Code Quality | Filename and directory naming conventions |
-| cspell | Content | Code-aware spell checking with custom dictionaries |
+| typos | Content | Source-aware typo detection (crate-ci/typos) |
 | kube-linter | Infrastructure | Kubernetes/Helm manifest linting |
 | CDK Nag | Infrastructure | CDK CloudFormation security scanning |
 | cfn-nag | Infrastructure | CloudFormation template security scanning |
