@@ -16,4 +16,4 @@ Misspelled variable names cause bugs. Misspelled UI strings erode user trust. Mi
 
 | Directory | Scanner | File format |
 |-----------|---------|-------------|
-| `cspell/` | cspell | `.json` dictionary and config files |
+| `typos/` | typos | `_typos.toml` config files (extend-words, allowlists) |

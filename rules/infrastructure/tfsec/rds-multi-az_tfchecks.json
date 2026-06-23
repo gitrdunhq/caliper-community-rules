@@ -9,7 +9,7 @@
   },
   "checks": [
     {
-      "code": "EEDOM-AWS-014",
+      "code": "CALIPER-AWS-014",
       "description": "RDS instances must be deployed in Multi-AZ configuration for high availability",
       "impact": "Single-AZ RDS instances have no automatic failover. An AZ outage or hardware failure causes complete database downtime until AWS manually restores the instance, potentially breaching SLA commitments",
       "resolution": "Set multi_az = true on the aws_db_instance resource to enable synchronous standby replication across a second Availability Zone",

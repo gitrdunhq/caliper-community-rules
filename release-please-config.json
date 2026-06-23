@@ -2,7 +2,7 @@
   "packages": {
     ".": {
       "release-type": "simple",
-      "package-name": "eedom-community-rules",
+      "package-name": "caliper-community-rules",
       "bump-minor-pre-major": true,
       "bump-patch-for-minor-pre-major": true,
       "changelog-path": "CHANGELOG.md"

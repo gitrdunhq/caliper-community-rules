@@ -1,7 +1,7 @@
-# Terraform that passes all eedom custom tfsec checks
-# EEDOM-AWS-001: S3 versioning enabled (via aws_s3_bucket_versioning resource)
-# EEDOM-AWS-002: RDS backup retention >= 7 days
-# EEDOM-AWS-003: CloudWatch log group retention set
+# Terraform that passes all caliper custom tfsec checks
+# CALIPER-AWS-001: S3 versioning enabled (via aws_s3_bucket_versioning resource)
+# CALIPER-AWS-002: RDS backup retention >= 7 days
+# CALIPER-AWS-003: CloudWatch log group retention set
 
 resource "aws_s3_bucket" "pass_data" {
   bucket = "my-app-data-bucket-pass"

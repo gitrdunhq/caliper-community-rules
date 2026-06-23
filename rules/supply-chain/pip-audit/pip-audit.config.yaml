@@ -1,5 +1,5 @@
-# eedom pip-audit plugin configuration
-# Place in .eedom/pip-audit.config.yaml in your repo
+# caliper pip-audit plugin configuration
+# Place in .caliper/pip-audit.config.yaml in your repo
 
 scan_timeout: 180          # seconds -- large dependency trees take time
 fail_on_unfixed: false     # do not block on vulns with no fix available
@@ -9,7 +9,7 @@ index_url: null            # null = use default PyPI, set for private indexes
 # Severity mapping for pip-audit findings.
 #
 # NOTE: pip-audit emits vulnerability IDs (GHSA/CVE/PYSEC) and fix versions,
-# NOT raw CVSS scores. Mapping to eedom severity requires either:
+# NOT raw CVSS scores. Mapping to caliper severity requires either:
 #   (a) An advisory enrichment step that fetches CVSS from OSV/NVD, or
 #   (b) Simpler heuristics based on what pip-audit actually provides.
 #

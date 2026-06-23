@@ -10,7 +10,7 @@
   },
   "checks": [
     {
-      "code": "EEDOM-AZ-001",
+      "code": "CALIPER-AZ-001",
       "description": "Azure Storage accounts must disable anonymous public blob access",
       "impact": "Enabling public blob access exposes storage container contents to the internet without authentication, risking data exfiltration",
       "resolution": "Set allow_nested_items_to_be_public = false on the azurerm_storage_account resource (AzureRM provider v3+). For older providers use allow_blob_public_access = false",

@@ -1,5 +1,5 @@
-# eedom cdk-nag plugin configuration
-# Place in .eedom/cdk-nag.config.yaml in your repo
+# caliper cdk-nag plugin configuration
+# Place in .caliper/cdk-nag.config.yaml in your repo
 
 synth_timeout: 120      # seconds to wait for cdk synth
 scan_timeout: 60        # seconds per template scan

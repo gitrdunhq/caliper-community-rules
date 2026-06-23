@@ -4,7 +4,7 @@
 
 ## Plugin
 
-<!-- Which eedom plugin is this for? (semgrep, opa, gitleaks, etc.) -->
+<!-- Which caliper plugin is this for? (semgrep, opa, gitleaks, etc.) -->
 
 ## Severity
 
@@ -15,5 +15,5 @@
 - [ ] Rule includes test case (positive + negative match)
 - [ ] Description explains what it catches and why
 - [ ] Plugin category specified and file is in the correct directory
-- [ ] Tested against eedom locally
+- [ ] Tested against caliper locally
 - [ ] Severity rating included in the rule metadata

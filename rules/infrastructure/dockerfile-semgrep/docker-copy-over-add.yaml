@@ -13,11 +13,11 @@ rules:
       category: infrastructure
       subcategory: dockerfile-best-practices
       property-domain: integrity
-      eedom-plugin: semgrep
+      caliper-plugin: semgrep
       compliance_mappings:
         - framework: cis-docker-v1.6
           controls: ["4.9"]
       references:
         - https://docs.docker.com/develop/develop-images/instructions/#add-or-copy
         - https://www.cisecurity.org/benchmark/docker
-        - https://github.com/gitrdunhq/eedom-community-rules
+        - https://github.com/gitrdunhq/caliper-community-rules

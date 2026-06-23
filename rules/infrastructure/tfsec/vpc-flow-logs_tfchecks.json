@@ -12,7 +12,7 @@
   },
   "checks": [
     {
-      "code": "EEDOM-AWS-008",
+      "code": "CALIPER-AWS-008",
       "description": "VPC flow logs must be enabled to capture IP traffic metadata for audit and incident response. An aws_flow_log resource with vpc_id set is required. Note: tfsec custom checks cannot validate that every aws_vpc resource has a corresponding aws_flow_log — this check verifies that VPC-scoped flow log resources exist and are correctly formed.",
       "impact": "Without VPC flow logs, network-level traffic to and from EC2 instances is invisible. Attackers can perform lateral movement, data exfiltration, or reconnaissance with no audit trail",
       "resolution": "Create an aws_flow_log resource referencing the VPC via vpc_id. Set traffic_type to ALL (not ACCEPT or REJECT only) and configure log_destination to CloudWatch Logs or S3",

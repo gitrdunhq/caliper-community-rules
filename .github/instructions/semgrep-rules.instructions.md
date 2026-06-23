@@ -5,7 +5,7 @@ applyTo: 'rules/**/semgrep/*.yaml'
 
 # Semgrep Rule Conventions
 
-Semgrep rules in this repo run via the eedom `semgrep` plugin. Every rule is a YAML file under `rules/{category}/semgrep/`. The filename (kebab-case, no extension) must match the rule `id`.
+Semgrep rules in this repo run via the caliper `semgrep` plugin. Every rule is a YAML file under `rules/{category}/semgrep/`. The filename (kebab-case, no extension) must match the rule `id`.
 
 ## Rule structure
 
@@ -24,7 +24,7 @@ rules:
       category: security
       subcategory: vulnerability-class
       property-domain: integrity
-      eedom-plugin: semgrep
+      caliper-plugin: semgrep
       compliance_mappings:
         - framework: owasp-top10-2021
           controls: ["A03:2021"]
@@ -136,7 +136,7 @@ Required fields — all must be present:
 | `category` | `security`, `infrastructure`, `code-quality`, `standards`, `supply-chain`, `content` |
 | `subcategory` | Specific vulnerability class in kebab-case (e.g., `command-injection`) |
 | `property-domain` | DPS-12 domain from the enum in `kirby-rule-schema.yaml` |
-| `eedom-plugin` | Always `semgrep` for files in `semgrep/` directories |
+| `caliper-plugin` | Always `semgrep` for files in `semgrep/` directories |
 | `compliance_mappings` | At least one entry; use framework IDs from `kirby-rule-schema.yaml` |
 | `references` | At least one authoritative URL (CWE, CVE, OWASP, vendor docs) |
 

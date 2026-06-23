@@ -1,4 +1,4 @@
-# Test fixtures for KIRBY-INF-015 — S3 Public ACL (EEDOM-AWS-013 / 013-WRITE / 013-AUTH)
+# Test fixtures for KIRBY-INF-015 — S3 Public ACL (CALIPER-AWS-013 / 013-WRITE / 013-AUTH)
 # PASS: aws_s3_bucket_acl with a private or non-public canned ACL
 # FAIL: aws_s3_bucket_acl with public-read, public-read-write, or authenticated-read
 
@@ -54,7 +54,7 @@ resource "aws_s3_bucket" "fail_public_read" {
   bucket = "example-bucket-public-read-fail"
 }
 
-# FAIL: EEDOM-AWS-013 — public-read exposes all objects to unauthenticated internet users
+# FAIL: CALIPER-AWS-013 — public-read exposes all objects to unauthenticated internet users
 resource "aws_s3_bucket_acl" "fail_public_read" {
   bucket = aws_s3_bucket.fail_public_read.id
   acl    = "public-read" # FAIL: grants read access to the entire internet
@@ -64,7 +64,7 @@ resource "aws_s3_bucket" "fail_public_read_write" {
   bucket = "example-bucket-public-rw-fail"
 }
 
-# FAIL: EEDOM-AWS-013-WRITE — public-read-write allows anyone to read, write, or delete objects
+# FAIL: CALIPER-AWS-013-WRITE — public-read-write allows anyone to read, write, or delete objects
 resource "aws_s3_bucket_acl" "fail_public_read_write" {
   bucket = aws_s3_bucket.fail_public_read_write.id
   acl    = "public-read-write" # FAIL: grants full read/write to all internet users
@@ -74,7 +74,7 @@ resource "aws_s3_bucket" "fail_authenticated_read" {
   bucket = "example-bucket-auth-read-fail"
 }
 
-# FAIL: EEDOM-AWS-013-AUTH — authenticated-read grants read to all authenticated AWS accounts worldwide
+# FAIL: CALIPER-AWS-013-AUTH — authenticated-read grants read to all authenticated AWS accounts worldwide
 resource "aws_s3_bucket_acl" "fail_authenticated_read" {
   bucket = aws_s3_bucket.fail_authenticated_read.id
   acl    = "authenticated-read" # FAIL: any authenticated AWS account globally can read this bucket

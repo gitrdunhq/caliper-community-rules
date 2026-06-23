@@ -21,7 +21,7 @@ rules:
       category: infrastructure
       subcategory: dockerfile-best-practices
       property-domain: confidentiality
-      eedom-plugin: semgrep
+      caliper-plugin: semgrep
       compliance_mappings:
         - framework: cis-docker-v1.6
           controls: ["4.1"]
@@ -30,4 +30,4 @@ rules:
       references:
         - https://docs.docker.com/develop/develop-images/instructions/#user
         - https://www.cisecurity.org/benchmark/docker
-        - https://github.com/gitrdunhq/eedom-community-rules
+        - https://github.com/gitrdunhq/caliper-community-rules

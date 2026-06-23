@@ -1,4 +1,4 @@
-# Test fixtures for KIRBY-INF-006 / EEDOM-AWS-005 — RDS Storage Encryption
+# Test fixtures for KIRBY-INF-006 / CALIPER-AWS-005 — RDS Storage Encryption
 # PASS: aws_db_instance with storage_encrypted = true
 # FAIL: aws_db_instance with storage_encrypted = false or omitted
 
@@ -37,7 +37,7 @@ resource "aws_db_instance" "fail_not_encrypted" {
   instance_class = "db.t3.medium"
 
   allocated_storage = 100
-  storage_encrypted = false # FAIL: encryption disabled — fails EEDOM-AWS-005
+  storage_encrypted = false # FAIL: encryption disabled — fails CALIPER-AWS-005
 
   backup_retention_period = 7
   username                = "dbadmin"
@@ -56,7 +56,7 @@ resource "aws_db_instance" "fail_encryption_omitted" {
   instance_class = "db.t3.small"
 
   allocated_storage = 20
-  # storage_encrypted omitted — defaults to false, fails EEDOM-AWS-005
+  # storage_encrypted omitted — defaults to false, fails CALIPER-AWS-005
 
   backup_retention_period = 7
   username                = "dbadmin"

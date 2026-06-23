@@ -6,7 +6,7 @@ excludeAgent: ["coding-agent"]
 
 # Kirby Rule PR Review
 
-Scanner rule PRs have a different failure mode than application code PRs. A bug here ships to every eedom user and either floods them with false positives or silently misses vulnerabilities. Review with that in mind.
+Scanner rule PRs have a different failure mode than application code PRs. A bug here ships to every caliper user and either floods them with false positives or silently misses vulnerabilities. Review with that in mind.
 
 Use the following severity tiers for all comments:
 

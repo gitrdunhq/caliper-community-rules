@@ -1,14 +1,14 @@
 # Kirby kube-linter checks
 # Run standalone: kube-linter lint <path> --config checks.yaml
 #
-# The _kirby key inside each customCheck is eedom metadata.
+# The _kirby key inside each customCheck is caliper metadata.
 # kube-linter ignores unknown YAML fields during unmarshaling,
-# so this is transparent to the scanner but parseable by eedom.
+# so this is transparent to the scanner but parseable by caliper.
 
 checks:
   # Disable built-in checks in this config so only Kirby custom checks
-  # run when eedom invokes kube-linter with this file. Set addAllBuiltIn: true
-  # in your .eedom/kube-linter.config.yaml if you want built-in + Kirby checks.
+  # run when caliper invokes kube-linter with this file. Set addAllBuiltIn: true
+  # in your .caliper/kube-linter.config.yaml if you want built-in + Kirby checks.
   addAllBuiltIn: false
 
 customChecks:

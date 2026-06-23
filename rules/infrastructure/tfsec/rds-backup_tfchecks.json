@@ -12,7 +12,7 @@
   },
   "checks": [
     {
-      "code": "EEDOM-AWS-002",
+      "code": "CALIPER-AWS-002",
       "description": "RDS instances must have backup retention of at least 7 days",
       "impact": "Insufficient backup retention limits disaster recovery options",
       "resolution": "Set backup_retention_period to at least 7 in the RDS instance resource",

@@ -1,10 +1,10 @@
 # cfn-nag Rules
 
-CloudFormation security rules for the eedom `cfn-nag` plugin. These are [cfn_nag custom rules](https://github.com/stelligent/cfn_nag#custom-rules) that extend the built-in checks.
+CloudFormation security rules for the caliper `cfn-nag` plugin. These are [cfn_nag custom rules](https://github.com/stelligent/cfn_nag#custom-rules) that extend the built-in checks.
 
 ## How to use
 
-Place `.rb` rule files in your repo's `.eedom/cfn-nag-rules/` directory. The eedom cfn-nag plugin picks them up automatically via `--rule-directory`.
+Place `.rb` rule files in your repo's `.caliper/cfn-nag-rules/` directory. The caliper cfn-nag plugin picks them up automatically via `--rule-directory`.
 
 ## Included rules
 

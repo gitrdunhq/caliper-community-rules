@@ -9,7 +9,7 @@
   },
   "checks": [
     {
-      "code": "EEDOM-AWS-016",
+      "code": "CALIPER-AWS-016",
       "description": "ElastiCache replication groups must have in-transit encryption enabled to protect cache data in motion",
       "impact": "Without TLS, all Redis/Memcached traffic between the application and cache nodes is transmitted in plaintext on the VPC network, exposing session tokens, PII, and other sensitive cache values to network-level eavesdropping",
       "resolution": "Set transit_encryption_enabled = true on the aws_elasticache_replication_group resource. Note: changing this setting requires replacing the replication group",

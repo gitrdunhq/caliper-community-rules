@@ -1,6 +1,6 @@
-# eedom-community-rules (codename: Kirby)
+# caliper-community-rules (codename: Kirby)
 
-This repo is the community scanner rule catalog for **eedom** — a deterministic code review tool. Kirby ships rules that eedom applies during PR review, CI gates, and fleet-wide scans. Rules are the product here: they must be correct, well-tested, and accurately mapped to compliance controls.
+This repo is the community scanner rule catalog for **caliper** — a deterministic code review tool. Kirby ships rules that caliper applies during PR review, CI gates, and fleet-wide scans. Rules are the product here: they must be correct, well-tested, and accurately mapped to compliance controls.
 
 ## What lives here
 
@@ -54,7 +54,7 @@ Regardless of scanner format, each rule must embed (or have a sidecar entry in `
 | `category` | Top-level category (security, infrastructure, etc.) |
 | `subcategory` | Specific vulnerability class (command-injection, s3-public-access, etc.) |
 | `property_domain` | DPS-12 property domain the rule validates |
-| `eedom-plugin` | Scanner that executes this rule (semgrep, tfsec, cfn-nag, kube-linter, etc.) |
+| `caliper-plugin` | Scanner that executes this rule (semgrep, tfsec, cfn-nag, kube-linter, etc.) |
 | `compliance_mappings` | Array of {framework, controls[]} entries |
 | `references` | URLs to authoritative docs for the underlying control |
 
@@ -93,7 +93,7 @@ Fixtures live in a `tests/` directory alongside the rule file. Naming:
 
 ## Pattern quality is the only thing that matters
 
-**False positives** erode trust — developers start ignoring eedom findings. Every pattern must be tight enough to avoid flagging correct code.
+**False positives** erode trust — developers start ignoring caliper findings. Every pattern must be tight enough to avoid flagging correct code.
 
 **False negatives** leave gaps — vulnerabilities the rule claims to catch slip through. Common variants (different APIs, different string construction methods, equivalent idioms) must be covered.
 

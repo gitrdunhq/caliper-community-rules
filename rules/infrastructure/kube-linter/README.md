@@ -55,21 +55,21 @@ Without CPU and memory limits a single misbehaving or compromised container can 
 kube-linter lint path/to/manifests --config checks.yaml
 ```
 
-kube-linter produces JSON output by default when invoked by eedom. To run manually with JSON:
+kube-linter produces JSON output by default when invoked by caliper. To run manually with JSON:
 
 ```bash
 kube-linter lint k8s/ --config checks.yaml --format json
 ```
 
-## How eedom integrates kube-linter
+## How Caliper integrates kube-linter
 
-eedom invokes `kube-linter lint` as a subprocess, passing `checks.yaml` via `--config`. The JSON output is parsed and each finding is mapped to the eedom severity model using the `severity_map` in `kube-linter.config.yaml`.
+Caliper invokes `kube-linter lint` as a subprocess, passing `checks.yaml` via `--config`. The JSON output is parsed and each finding is mapped to the caliper severity model using the `severity_map` in `kube-linter.config.yaml`.
 
-Place `kube-linter.config.yaml` in `.eedom/kube-linter.config.yaml` in your repo to configure scanner behaviour (target paths, excluded paths, severity mapping).
+Place `kube-linter.config.yaml` in `.caliper/kube-linter.config.yaml` in your repo to configure scanner behaviour (target paths, excluded paths, severity mapping).
 
 ### Severity mapping
 
-| kube-linter Severity | eedom Severity |
+| kube-linter Severity | caliper Severity |
 |---|---|
 | CRITICAL | critical |
 | HIGH | high |
@@ -80,7 +80,7 @@ Place `kube-linter.config.yaml` in `.eedom/kube-linter.config.yaml` in your repo
 
 | File | Purpose |
 |---|---|
-| `kube-linter.config.yaml` | eedom plugin configuration (place in `.eedom/`) |
+| `kube-linter.config.yaml` | caliper plugin configuration (place in `.caliper/`) |
 | `checks.yaml` | kube-linter config with Kirby custom check definitions |
 | `tests/no-root-containers_pass.yaml` | Compliant Deployment for KIRBY-INF-013 |
 | `tests/no-root-containers_fail.yaml` | Non-compliant Deployment for KIRBY-INF-013 |

@@ -1,4 +1,4 @@
-# Test fixtures for KIRBY-INF-027 / EEDOM-AWS-015 — Lambda Dead Letter Queue
+# Test fixtures for KIRBY-INF-027 / CALIPER-AWS-015 — Lambda Dead Letter Queue
 # PASS: aws_lambda_function with a dead_letter_config block present
 # FAIL: aws_lambda_function with no dead_letter_config block
 
@@ -31,7 +31,7 @@ resource "aws_lambda_function" "pass_dlq_sns" {
   runtime       = "python3.12"
   filename      = "function.zip"
 
-  dead_letter_config { # PASS: DLQ via SNS — satisfies EEDOM-AWS-015
+  dead_letter_config { # PASS: DLQ via SNS — satisfies CALIPER-AWS-015
     target_arn = aws_sns_topic.lambda_failures.arn
   }
 
@@ -55,7 +55,7 @@ resource "aws_lambda_function" "fail_no_dlq" {
   filename      = "function.zip"
 
   # dead_letter_config omitted — async failures are lost with no audit trail
-  # violates EEDOM-AWS-015
+  # violates CALIPER-AWS-015
 
   tags = {
     Environment = "production"
@@ -72,7 +72,7 @@ resource "aws_lambda_function" "fail_no_dlq_with_concurrency" {
   reserved_concurrent_executions = 10
 
   # dead_letter_config omitted — reserved concurrency does not substitute for a DLQ
-  # fails EEDOM-AWS-015
+  # fails CALIPER-AWS-015
 
   tags = {
     Environment = "staging"

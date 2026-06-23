@@ -1,4 +1,4 @@
-# Test fixtures for KIRBY-INF-011 / EEDOM-AWS-009 — EBS Volume Encryption
+# Test fixtures for KIRBY-INF-011 / CALIPER-AWS-009 — EBS Volume Encryption
 # PASS: aws_ebs_volume with encrypted = true
 # FAIL: aws_ebs_volume with encrypted = false or encrypted omitted
 
@@ -43,7 +43,7 @@ resource "aws_ebs_volume" "fail_encryption_disabled" {
   availability_zone = "us-east-1a"
   size              = 100
   type              = "gp3"
-  encrypted         = false # FAIL: encryption must be true — fails EEDOM-AWS-009
+  encrypted         = false # FAIL: encryption must be true — fails CALIPER-AWS-009
 
   tags = {
     Name        = "fail-data-volume-disabled"
@@ -57,7 +57,7 @@ resource "aws_ebs_volume" "fail_encryption_omitted" {
   availability_zone = "us-east-1a"
   size              = 50
   type              = "gp2"
-  # encrypted omitted — Terraform default is false, fails EEDOM-AWS-009
+  # encrypted omitted — Terraform default is false, fails CALIPER-AWS-009
 
   tags = {
     Name        = "fail-data-volume-omitted"
