@@ -43,7 +43,7 @@ Python or SQL scripts with a README explaining the check and example output.
 
 ### Config-based plugins
 
-For plugins that use configuration files (kube-linter, complexity, ls-lint, cpd, trivy, osv, scancode, cspell, gitleaks, clamav, supply-chain, coding-standards), include:
+For plugins that use configuration files (kube-linter, complexity, ls-lint, cpd, trivy, osv, scancode, typos, gitleaks, clamav, supply-chain, coding-standards), include:
 
 - The config file
 - A README explaining what it enforces
