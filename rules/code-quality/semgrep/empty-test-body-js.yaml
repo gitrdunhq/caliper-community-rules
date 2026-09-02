@@ -17,7 +17,7 @@ rules:
     category: code-quality
     subcategory: test-quality
     property-domain: integrity
-    eedom-plugin: semgrep
+    caliper-plugin: semgrep
     compliance_mappings:
     - framework: nist-800-53-r5
       controls:

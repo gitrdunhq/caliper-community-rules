@@ -18,7 +18,7 @@ rules:
     category: infrastructure
     subcategory: custom-resource-lifecycle
     property-domain: idempotency
-    eedom-plugin: semgrep
+    caliper-plugin: semgrep
     compliance_mappings:
     - framework: nist-800-53-r5
       controls:
