@@ -1,0 +1,28 @@
+rules:
+- id: cdk-custom-resource-oncreate-without-onupdate
+  patterns:
+  - pattern-either:
+    - pattern: 'new $CR.AwsCustomResource($SCOPE, $ID, { ..., onCreate: $C, ... })'
+    - pattern: 'new AwsCustomResource($SCOPE, $ID, { ..., onCreate: $C, ... })'
+  - pattern-not: 'new $CR.AwsCustomResource($SCOPE, $ID, { ..., onUpdate: $U, ... })'
+  - pattern-not: 'new AwsCustomResource($SCOPE, $ID, { ..., onUpdate: $U, ... })'
+  message: 'AwsCustomResource with onCreate but no onUpdate: the SDK call runs once on CREATE and every
+    later change to its parameters is silently ignored (with a constant physicalResourceId nothing triggers
+    a replace either). Add an onUpdate that re-applies the current parameters.'
+  severity: ERROR
+  languages:
+  - typescript
+  - javascript
+  metadata:
+    kirby_id: KIRBY-INF-035
+    category: infrastructure
+    subcategory: custom-resource-lifecycle
+    property-domain: idempotency
+    caliper-plugin: semgrep
+    compliance_mappings:
+    - framework: nist-800-53-r5
+      controls:
+      - CM-3
+      - SI-10
+    references:
+    - https://github.com/gitrdunhq/caliper/issues/499

@@ -1,0 +1,27 @@
+rules:
+- id: cdk-fixed-iam-role-name
+  patterns:
+  - pattern-either:
+    - pattern: $B.overrideRoleName("$N")
+    - pattern: 'new $IAM.Role($SCOPE, $ID, { ..., roleName: "$N", ... })'
+    - pattern: 'new Role($SCOPE, $ID, { ..., roleName: "$N", ... })'
+  message: IAM role names are account-global while stacks are regional; a fixed literal name fails with
+    EntityAlreadyExists on the second region (DR) deploy. Let CDK generate the name or include the region
+    in it.
+  severity: WARNING
+  languages:
+  - typescript
+  - javascript
+  metadata:
+    kirby_id: KIRBY-INF-037
+    category: infrastructure
+    subcategory: multi-region-deploy
+    property-domain: uniqueness
+    caliper-plugin: semgrep
+    compliance_mappings:
+    - framework: nist-800-53-r5
+      controls:
+      - CM-3
+      - CP-10
+    references:
+    - https://github.com/gitrdunhq/caliper/issues/499
