@@ -196,6 +196,46 @@ rules:
       - framework: iso-27001-2022
         controls: ["A.8.8"]
 
+  - kirby_id: KIRBY-INF-035
+    name: cdk-custom-resource-oncreate-without-onupdate
+    scanner: semgrep
+    severity: high
+    targets: [js-ts]
+    property_domain: idempotency
+    compliance_mappings:
+      - framework: nist-800-53-r5
+        controls: ["CM-3", "SI-10"]
+
+  - kirby_id: KIRBY-INF-036
+    name: cdk-code-fromasset-relative-literal
+    scanner: semgrep
+    severity: medium
+    targets: [js-ts]
+    property_domain: determinism
+    compliance_mappings:
+      - framework: nist-800-53-r5
+        controls: ["CM-2", "SA-10"]
+
+  - kirby_id: KIRBY-INF-037
+    name: cdk-fixed-iam-role-name
+    scanner: semgrep
+    severity: medium
+    targets: [js-ts]
+    property_domain: uniqueness
+    compliance_mappings:
+      - framework: nist-800-53-r5
+        controls: ["CM-3", "CP-10"]
+
+  - kirby_id: KIRBY-INF-038
+    name: cdk-ssm-document-default-update-method
+    scanner: semgrep
+    severity: medium
+    targets: [js-ts]
+    property_domain: reversibility
+    compliance_mappings:
+      - framework: nist-800-53-r5
+        controls: ["CM-3", "CP-10"]
+
   # ─── CODE QUALITY ──────────────────────────────────────────────────────
 
   - kirby_id: KIRBY-QUA-001
@@ -213,6 +253,18 @@ rules:
     targets: [python]
     property_domain: determinism
     compliance_mappings: []
+
+  - kirby_id: KIRBY-QUA-019
+    name: empty-test-body-js
+    scanner: semgrep
+    severity: high
+    targets: [js-ts]
+    property_domain: integrity
+    compliance_mappings:
+      - framework: nist-800-53-r5
+        controls: ["SA-11"]
+      - framework: owasp-asvs-v4.0
+        controls: ["V1.1.5"]
 
   # ─── STANDARDS ─────────────────────────────────────────────────────────
 

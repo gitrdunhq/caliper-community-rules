@@ -1,0 +1,29 @@
+rules:
+- id: empty-test-body-js
+  patterns:
+  - pattern-either:
+    - pattern: 'test("...", () => {})'
+    - pattern: 'test("...", async () => {})'
+    - pattern: 'it("...", () => {})'
+    - pattern: 'it("...", async () => {})'
+  message: Test with an empty body passes trivially and gives CI a green check with zero coverage (the
+    untouched `cdk init` template does this). Assert something or delete the test.
+  severity: ERROR
+  languages:
+  - javascript
+  - typescript
+  metadata:
+    kirby_id: KIRBY-QUA-019
+    category: code-quality
+    subcategory: test-quality
+    property-domain: integrity
+    eedom-plugin: semgrep
+    compliance_mappings:
+    - framework: nist-800-53-r5
+      controls:
+      - SA-11
+    - framework: owasp-asvs-v4.0
+      controls:
+      - V1.1.5
+    references:
+    - https://github.com/gitrdunhq/caliper/issues/499

@@ -1,0 +1,28 @@
+rules:
+- id: cdk-code-fromasset-relative-literal
+  patterns:
+  - pattern-either:
+    - pattern: $NS.Code.fromAsset("$P", ...)
+    - pattern: Code.fromAsset("$P", ...)
+  - metavariable-regex:
+      metavariable: $P
+      regex: ^[^/].*
+  message: Code.fromAsset with a relative string literal resolves against the process cwd, not this file;
+    a synth from another directory packages the wrong asset. Use path.join(__dirname, ...).
+  severity: WARNING
+  languages:
+  - typescript
+  - javascript
+  metadata:
+    kirby_id: KIRBY-INF-036
+    category: infrastructure
+    subcategory: build-reproducibility
+    property-domain: determinism
+    eedom-plugin: semgrep
+    compliance_mappings:
+    - framework: nist-800-53-r5
+      controls:
+      - CM-2
+      - SA-10
+    references:
+    - https://github.com/gitrdunhq/caliper/issues/499
